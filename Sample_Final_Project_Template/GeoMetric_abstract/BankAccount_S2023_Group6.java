@@ -2,15 +2,13 @@ public abstract class BankAccount_S2023_Group6 {
   private String accountNumber;
   private String firstName;
   private String lastName;
-  private Double balance;
 
   protected BankAccount_S2023_Group6() {
   }
-  protected BankAccount_S2023_Group6(String accountNumber, String firstName, String lastName, Double balance) { 
+  protected BankAccount_S2023_Group6(String accountNumber, String firstName, String lastName) { 
     this.accountNumber = accountNumber;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.balance = balance;
   }
  
   public String getAccountNumber() {
@@ -35,14 +33,6 @@ public abstract class BankAccount_S2023_Group6 {
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
-  }
-  
-  public Double getBalance() {
-    return balance;
-  }
-
-  public void setBalance(Double balance) {
-    this.balance = balance;
   }
 
   @Override
