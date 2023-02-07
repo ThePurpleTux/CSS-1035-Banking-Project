@@ -1,12 +1,12 @@
-public abstract class BankAccount {
+public abstract class BankAccount_S2023_Group6 {
   private String accountNumber;
   private String firstName;
   private String lastName;
   private Double balance;
 
-  protected BankAccount() {
+  protected BankAccount_S2023_Group6() {
   }
-  protected BankAccount(String accountNumber, String firstName, String lastName, Double balance) { 
+  protected BankAccount_S2023_Group6(String accountNumber, String firstName, String lastName, Double balance) { 
     this.accountNumber = accountNumber;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -47,6 +47,6 @@ public abstract class BankAccount {
 
   @Override
   public String toString() {
-    return "BankAccount [accountNumber= " + accountNumber + ", firstName= " + firstName + ", lastName= " + lastName + "]";
+    return "BankAccount_S2023_Group6 [accountNumber= " + accountNumber + ", firstName= " + firstName + ", lastName= " + lastName + "]";
   }
 }
