@@ -1,10 +1,10 @@
 public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
-  private String checkingAcctNum;
+  private String checkingAccountNum;
   private double accountBalance;
 
-  protected CheckingAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName, String checkingAcctNum, double accountBalance) {
-    super(checkingAcctNum, checkingAcctNum, checkingAcctNum);
-    this.checkingAcctNum = checkingAcctNum;
+  protected CheckingAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName, String checkingAccountNum, double accountBalance) {
+    super(checkingAccountNum, checkingAccountNum, checkingAccountNum);
+    this.checkingAccountNum = checkingAccountNum;
     this.accountBalance = accountBalance;
   }
 
