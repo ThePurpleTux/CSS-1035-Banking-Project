@@ -7,33 +7,23 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
     this.accountBalance = accountBalance;
   }
 
-  /** Return width */
-  public double getWidth() {
-    return width;
+  /** Deposit amount to the savings account. Returns the balance after deposit*/
+  public double despositSaving(double depositAmount) {
+    return this.accountBalance += despositAmount;
   }
 
-  /** Set a new width */
-  public void setWidth(double width) {
-    this.width = width;
+  /** Withdraw amount from account. Returns the balance after withdrawl */
+  public void withdrawSaving(double withdrawAmount) {
+    return this.accountBalance -= withdrawAmount;
   }
 
-  /** Return height */
-  public double getHeight() {
-    return height;
+  /** Charge Fees from account. Returns balance after fee */
+  public double chargeFees(double fee) {
+    return this.accountBalance -= fee;
   }
 
-  /** Set a new height */
-  public void setHeight(double height) {
-    this.height = height;
-  }
-
-  @Override /** Return area */
-  public double getArea() {
-    return width * height;
-  }
-
-  @Override /** Return perimeter */
-  public double getPerimeter() {
-    return 2 * (width + height);
+  /** Print the SavingAccount info */
+  public void printSavingAccount_S2023_Group6(){
+    System.out.println("Checking Account Information: [" + "Account Number: " + savingAccountNum + "; Account Balance: " + accountBalance + "]");
   }
 }
