@@ -31,7 +31,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 
   /* Print the CheckingAccount info */
   public void printCheckingAccount_S2023_Group6() {
-    System.out.println("Checking Account Information: [" + "Account Number: " + checkingAcctNum + "; "
+    System.out.println("Checking Account Information: [" + "Account Number: " + checkingAccountNum + "; "
         + "Account Balance: " + accountBalance + "]");
   }
 }
