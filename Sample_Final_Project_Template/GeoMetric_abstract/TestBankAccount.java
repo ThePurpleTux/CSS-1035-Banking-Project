@@ -10,7 +10,7 @@ public class TestBankAccount {
 		feeAmount = 50;
 
 		System.out.println("Create Account with Information:");
-		System.out.println("Print Account Info:");
+		System.out.println("Print Entire Account Info:");
 		SavingsAccount_S2023_Group6 save = new SavingsAccount_S2023_Group6("1110", "John", "Doe", "001", 99.99);
     	System.out.println(save.toString());
 		save.printSavingAccount_S2023_Group6();
