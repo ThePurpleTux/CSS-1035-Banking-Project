@@ -1,3 +1,4 @@
+package src.tests;
 public class TestBankAccount1 {
   /** Main method */
   private static double depositAmount;
