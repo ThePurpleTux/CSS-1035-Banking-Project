@@ -1,14 +1,16 @@
 public abstract class BankAccount {
   private String accountNumber;
   private String firstName;
-  private String lastName; 
+  private String lastName;
+  private Double balance;
 
   protected BankAccount() {
   }
-  protected BankAccount(String accountNumber, String firstName, String lastName) { 
+  protected BankAccount(String accountNumber, String firstName, String lastName, Double balance) { 
     this.accountNumber = accountNumber;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.balance = balance;
   }
  
   public String getAccountNumber() {
@@ -33,6 +35,14 @@ public abstract class BankAccount {
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
+  }
+  
+  public Double getBalance() {
+    return balance;
+  }
+
+  public void setBalance(Double balance) {
+    this.balance = balance;
   }
 
   @Override
