@@ -1,31 +1,24 @@
 public class TestGeometricObject {
   /** Main method */
   public static void main(String[] args) {
-    // Declare and initialize two geometric objects
-    GeometricObject geoObject1 = new Circle(5);
-    GeometricObject geoObject2 = new Rectangle(5, 3);
+    
+		SavingsAccount_S2023_Group6 save = new SavingsAccount_S2023_Group6("1110", 8388);
 
-    System.out.println("The two objects have the same area? " +
-      equalArea(geoObject1, geoObject2));
-
-    // Display circle
-    displayGeometricObject(geoObject1);
-
-    // Display rectangle
-    displayGeometricObject(geoObject2);
-  }
-
-  /** A method for comparing the areas of two geometric objects */
-  public static boolean equalArea(GeometricObject object1,
-      GeometricObject object2) {
-    return object1.getArea() == object2.getArea();
-  }
-
-  /** A method for displaying a geometric object */
-  public static void displayGeometricObject(GeometricObject object) {
-    System.out.println();
-    System.out.println("The area is " + object.getArea());
-    System.out.println("The perimeter is " + object.getPerimeter());
-  }
+		save.printSavingAccount_S2023_Group6();
+		System.out.println("Deposit: 1000 " + save.depositSaving(1000));
+		System.out.println("Withdraw: 5863 " + save.withdrawSaving(5863));
+		System.out.println("Charge Fees: 53 " + save.chargeFees(53));
+		save.printSavingAccount_S2023_Group6();
+		
+		
+		
+		CheckingAccount_S2023_Group6 check = new CheckingAccount_S2023_Group6("1337", 4722);
+		System.out.println("\n");
+		check.printCheckingAccount_S2023_Group6();
+		System.out.println("Deposit: 2999 " + check.depositChecking(2999));
+		System.out.println("Withdraw: 4533 " + check.withdrawChecking(4533));
+		System.out.println("Charge Fees: 69 " + check.chargeFees(69));
+		check.printCheckingAccount_S2023_Group6();
+    
 }
 
