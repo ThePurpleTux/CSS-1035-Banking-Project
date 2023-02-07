@@ -10,19 +10,23 @@ public class TestBankAccount {
 		feeAmount = 50;
 
 		System.out.println("Create Account with Information:");
+		SavingsAccount_S2023_Group6 savingsAcct1 = new SavingsAccount_S2023_Group6("1110", "John", "Doe", "001", 99.99);
+    	
 		System.out.println("Print Entire Account Info:");
-		SavingsAccount_S2023_Group6 save = new SavingsAccount_S2023_Group6("1110", "John", "Doe", "001", 99.99);
-    	System.out.println(save.toString());
-		save.printSavingAccount_S2023_Group6();
+		System.out.println(savingsAcct1.toString());
+		savingsAcct1.printSavingAccount_S2023_Group6();
+
 		System.out.println("Deposit amount of: " + depositAmount);
-		save.depositSaving(depositAmount);
-		save.printSavingAccount_S2023_Group6();
+		savingsAcct1.depositSaving(depositAmount);
+		savingsAcct1.printSavingAccount_S2023_Group6();
+
 		System.out.println("Withdraw amount of: " + withdrawAmount);
-		save.withdrawSaving(withdrawAmount);
-		save.printSavingAccount_S2023_Group6();
+		savingsAcct1.withdrawSaving(withdrawAmount);
+		savingsAcct1.printSavingAccount_S2023_Group6();
+
 		System.out.println("Fee amount of: " + feeAmount);
-		save.chargeFees(feeAmount);
-		save.printSavingAccount_S2023_Group6();
+		savingsAcct1.chargeFees(feeAmount);
+		savingsAcct1.printSavingAccount_S2023_Group6();
 	}
 }
 
