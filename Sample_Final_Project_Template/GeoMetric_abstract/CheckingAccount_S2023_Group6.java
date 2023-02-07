@@ -15,7 +15,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 */
 
   // Deposit amount to account. Returns balance after deposit
-  public double despositChecking(double depositAmount){
+  public double depositChecking(double depositAmount){
     this.accountBalance += depositAmount;
 
     return this.accountBalance;

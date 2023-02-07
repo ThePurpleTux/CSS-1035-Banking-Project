@@ -8,14 +8,14 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   }
 
   /** Deposit amount to the savings account. Returns the balance after deposit*/
-  public double despositSaving(double depositAmount) {
-    this.accountBalance += despositAmount;
+  public double depositSaving(double depositAmount) {
+    this.accountBalance += depositAmount;
     
     return this.accountBalance;
   }
 
   /** Withdraw amount from account. Returns the balance after withdrawl */
-  public void withdrawSaving(double withdrawAmount) {
+  public double withdrawSaving(double withdrawAmount) {
     this.accountBalance -= withdrawAmount;
     
     return this.accountBalance;
