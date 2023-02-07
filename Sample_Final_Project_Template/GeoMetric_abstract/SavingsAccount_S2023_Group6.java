@@ -1,10 +1,10 @@
 public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
-  private double width;
-  private double height;
+  private String savingAccountNum;
+  private double accountBalance;
 
-  public SavingsAccount_S2023_Group6(double width, double height) {
-    this.width = width;
-    this.height = height;
+  public SavingsAccount_S2023_Group6(String savingAccountNum, double accountBalance) {
+    this.savingAccountNum = savingAccountNum;
+    this.accountBalance = accountBalance;
   }
 
   /** Return width */
