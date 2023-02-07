@@ -1,8 +1,8 @@
-public class CheckingAccount extends BankAccount {
+public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   private String checkingAcctNum;
   private double accountBalance;
  
-  protected CheckingAccount(String checkingAcctNum, double accountBalance) { 
+  protected CheckingAccount_S2023_Group6(String checkingAcctNum, double accountBalance) { 
     this.checkingAcctNum = checkingAcctNum;
     this.accountBalance = accountBalance;
   }
@@ -15,7 +15,7 @@ public class CheckingAccount extends BankAccount {
 */
 
   /* Print the CheckingAccount info */
-  public void printCheckingAccount() {
+  public void printCheckingAccount_S2023_Group6() {
     System.out.println("Checking Account Information: [" + "Account Number: " + checkingAcctNum + "; " + "Account Balance: " + accountBalance + "]");
   }
 }
