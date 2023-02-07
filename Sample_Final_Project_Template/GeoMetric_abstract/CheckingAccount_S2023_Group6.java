@@ -3,7 +3,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   private double accountBalance;
 
   protected CheckingAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName, String checkingAccountNum, double accountBalance) {
-    super(checkingAccountNum, checkingAccountNum, checkingAccountNum);
+    super(bankAccountNumber, firstName, lastName);
     this.checkingAccountNum = checkingAccountNum;
     this.accountBalance = accountBalance;
   }
