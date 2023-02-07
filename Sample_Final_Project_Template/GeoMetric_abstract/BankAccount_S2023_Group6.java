@@ -3,9 +3,6 @@ public abstract class BankAccount_S2023_Group6 {
   private String firstName;
   private String lastName;
 
-  protected BankAccount_S2023_Group6() {
-  }
-
   protected BankAccount_S2023_Group6(String accountNumber, String firstName, String lastName) {
     this.accountNumber = accountNumber;
     this.firstName = firstName;
