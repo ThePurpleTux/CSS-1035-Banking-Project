@@ -2,8 +2,9 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   private String savingAccountNum;
   private double accountBalance;
 
-  public SavingsAccount_S2023_Group6(String savingAccountNum, double accountBalance) {
-    this.savingAccountNum = savingAccountNum;
+  protected SavingsAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName, String savingsAccountNum, double accountBalance) {
+    super(bankAccountNumber, firstName, lastName);
+    this.savingAccountNum = savingsAccountNum;
     this.accountBalance = accountBalance;
   }
 
@@ -30,7 +31,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 
   /** Print the SavingAccount info */
   public void printSavingAccount_S2023_Group6() {
-    System.out.println("Saving Account Information: [" + "Account Number: " + savingAccountNum + "; Account Balance: "
+    System.out.println("Checking Account Information: [" + "Account Number: " + savingAccountNum + "; Account Balance: "
         + accountBalance + "]");
   }
 }
