@@ -1,5 +1,5 @@
 
-public class TestBankAccount1 {
+public class TestBankAccount2 {
   /** Main method */
   private static double depositAmount;
   private static double withdrawAmount;
