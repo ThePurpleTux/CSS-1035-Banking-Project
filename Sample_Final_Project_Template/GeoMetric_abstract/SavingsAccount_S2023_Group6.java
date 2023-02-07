@@ -1,8 +1,8 @@
-public class SavingsAccount extends BankAccount {
+public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   private double width;
   private double height;
 
-  public SavingsAccount(double width, double height) {
+  public SavingsAccount_S2023_Group6(double width, double height) {
     this.width = width;
     this.height = height;
   }
