@@ -5,12 +5,13 @@ public abstract class BankAccount_S2023_Group6 {
 
   protected BankAccount_S2023_Group6() {
   }
-  protected BankAccount_S2023_Group6(String accountNumber, String firstName, String lastName) { 
+
+  protected BankAccount_S2023_Group6(String accountNumber, String firstName, String lastName) {
     this.accountNumber = accountNumber;
     this.firstName = firstName;
     this.lastName = lastName;
   }
- 
+
   public String getAccountNumber() {
     return accountNumber;
   }
@@ -37,6 +38,7 @@ public abstract class BankAccount_S2023_Group6 {
 
   @Override
   public String toString() {
-    return "BankAccount_S2023_Group6 [accountNumber= " + accountNumber + ", firstName= " + firstName + ", lastName= " + lastName + "]";
+    return "BankAccount_S2023_Group6 [accountNumber= " + accountNumber + ", firstName= " + firstName + ", lastName= "
+        + lastName + "]";
   }
 }
