@@ -30,7 +30,13 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
     return this.accountBalance;
   }
   //Getters and setters
+  public String getSavingsAccountNumber() {
+    return savingAccountNum;
+  }
 
+  public void setSavingsAccountNumber(String SavingsAccountNumber) {
+    this.savingAccountNum = SavingsAccountNumber;
+  }
   
   /** Print the SavingAccount info */
   public void printSavingsAccount_S2023_Group6() {
