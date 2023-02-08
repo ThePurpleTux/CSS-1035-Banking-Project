@@ -2,7 +2,7 @@ public class TestBankAccount5 {
   	private static double startingBalance;
   	private static double depositAmount;
   	private static double withdrawAmount;
- 	 private static double feeAmount;
+ 	private static double feeAmount;
   
   /** Main method */
   	public static void main(String[] args) {
@@ -19,15 +19,15 @@ public class TestBankAccount5 {
 		System.out.println(CheckingAccount.toString());
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 
-		System.out.println("Deposit amount of: " + depositAmount);
+		System.out.println("Deposit amount of: $" + depositAmount);
 		CheckingAccount.depositChecking(depositAmount);
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 
-		System.out.println("Withdraw amount of: " + withdrawAmount);
+		System.out.println("Withdraw amount of: $" + withdrawAmount);
 		CheckingAccount.withdrawChecking(withdrawAmount);
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 
-		System.out.println("Fee amount of: " + feeAmount);
+		System.out.println("Fee amount of: $" + feeAmount);
 		CheckingAccount.chargeFees(feeAmount);
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 	}
