@@ -8,8 +8,8 @@ public class TestBankAccount2 {
   	public static void main(String[] args) {
 		
 		startingBalance = 155.55;
-		depositAmount = 250;
-		withdrawAmount = 15;
+		depositAmount = 250.22;
+		withdrawAmount = 150.01;
 		feeAmount = 30;
 
 		System.out.println("Create Savings Account with Information:");

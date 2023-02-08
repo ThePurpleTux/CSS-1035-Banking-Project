@@ -9,7 +9,7 @@ public class TestBankAccount6 {
 		
 		startingBalance = 6521.02;
 		depositAmount = 1502.79;
-		withdrawAmount = 672.99;
+		withdrawAmount = 672.96;
 		feeAmount = 245;
 
 		System.out.println("Create Checking Account with Information:");
