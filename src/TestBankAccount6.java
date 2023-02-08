@@ -1,4 +1,3 @@
-import javax.xml.stream.events.StartDocument;
 public class TestBankAccount6 {
 	private static double startingBalance;  
 	private static double depositAmount;
