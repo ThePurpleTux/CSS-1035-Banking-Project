@@ -17,19 +17,19 @@ public class TestBankAccount3 {
     	
 		System.out.println("Print Entire Bank Account Info:");
 		System.out.println(SavingsAccount.toString());
-		SavingsAccount.printSavingAccount_S2023_Group6();
+		SavingsAccount.printSavingsAccount_S2023_Group6();
 
 		System.out.println("Deposit amount of: " + depositAmount);
-		SavingsAccount.depositSaving(depositAmount);
-		SavingsAccount.printSavingAccount_S2023_Group6();
+		SavingsAccount.depositSavings(depositAmount);
+		SavingsAccount.printSavingsAccount_S2023_Group6();
 
 		System.out.println("Withdraw amount of: " + withdrawAmount);
-		SavingsAccount.withdrawSaving(withdrawAmount);
-		SavingsAccount.printSavingAccount_S2023_Group6();
+		SavingsAccount.withdrawSavings(withdrawAmount);
+		SavingsAccount.printSavingsAccount_S2023_Group6();
 
 		System.out.println("Fee amount of: " + feeAmount);
 		SavingsAccount.chargeFees(feeAmount);
-		SavingsAccount.printSavingAccount_S2023_Group6();
+		SavingsAccount.printSavingsAccount_S2023_Group6();
 	}
 }
 

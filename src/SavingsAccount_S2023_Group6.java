@@ -9,14 +9,14 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   }
 
   /** Deposit amount to the savings account. Returns the balance after deposit */
-  public double depositSaving(double depositAmount) {
+  public double depositSavings(double depositAmount) {
     this.accountBalance += depositAmount;
 
     return this.accountBalance;
   }
 
   /** Withdraw amount from account. Returns the balance after withdrawl */
-  public double withdrawSaving(double withdrawAmount) {
+  public double withdrawSavings(double withdrawAmount) {
     this.accountBalance -= withdrawAmount;
 
     return this.accountBalance;
@@ -30,8 +30,8 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   }
 
   /** Print the SavingAccount info */
-  public void printSavingAccount_S2023_Group6() {
-    System.out.println("Checking Account Information: [" + "Account Number: " + savingAccountNum + "; Account Balance: "
+  public void printSavingsAccount_S2023_Group6() {
+    System.out.println("Savings Account Information: [" + "Account Number: " + savingAccountNum + "; Account Balance: "
         + accountBalance + "]");
   }
 }
