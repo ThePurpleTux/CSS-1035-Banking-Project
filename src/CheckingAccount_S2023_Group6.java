@@ -29,7 +29,8 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 
     return this.accountBalance;
   }
-
+  //Getters and setters
+  
   /* Print the CheckingAccount info */
   public void printCheckingAccount_S2023_Group6() {
     System.out.println("Checking Account Information: [" + "Account Number: " + checkingAccountNum + "; "
