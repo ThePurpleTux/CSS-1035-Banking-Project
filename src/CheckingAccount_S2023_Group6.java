@@ -2,6 +2,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   private String checkingAccountNum;
   private double accountBalance;
 
+  //Constructor for Checking Account - calls super class Bank Account
   protected CheckingAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName, String checkingAccountNum, double accountBalance) {
     super(bankAccountNumber, firstName, lastName);
     this.checkingAccountNum = checkingAccountNum;

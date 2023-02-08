@@ -3,12 +3,13 @@ public abstract class BankAccount_S2023_Group6 {
   private String firstName;
   private String lastName;
 
+//Constructor for Bank Account
   protected BankAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName) {
     this.bankAccountNumber = bankAccountNumber;
     this.firstName = firstName;
     this.lastName = lastName;
   }
-
+//Getters and Setters
   public String getBankAccountNumber() {
     return bankAccountNumber;
   }
