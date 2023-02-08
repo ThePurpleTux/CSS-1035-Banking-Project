@@ -32,4 +32,3 @@ public class TestBankAccount5 {
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 	}
 }
-
