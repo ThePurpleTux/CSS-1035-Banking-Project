@@ -27,6 +27,14 @@ public class TestBankAccount6 {
 		CheckingAccount.withdrawChecking(withdrawAmount);
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 
+		System.out.println("Withdraw amount of: $" + withdrawAmount);
+		CheckingAccount.withdrawChecking(withdrawAmount);
+		CheckingAccount.printCheckingAccount_S2023_Group6();
+
+		System.out.println("Fee amount of: $" + feeAmount);
+		CheckingAccount.chargeFees(feeAmount);
+		CheckingAccount.printCheckingAccount_S2023_Group6();
+
 		System.out.println("Fee amount of: $" + feeAmount);
 		CheckingAccount.chargeFees(feeAmount);
 		CheckingAccount.printCheckingAccount_S2023_Group6();

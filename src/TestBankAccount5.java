@@ -22,6 +22,10 @@ public class TestBankAccount5 {
 		System.out.println("Deposit amount of: $" + depositAmount);
 		CheckingAccount.depositChecking(depositAmount);
 		CheckingAccount.printCheckingAccount_S2023_Group6();
+		
+		System.out.println("Deposit amount of: $" + depositAmount);
+		CheckingAccount.depositChecking(depositAmount);
+		CheckingAccount.printCheckingAccount_S2023_Group6();
 
 		System.out.println("Withdraw amount of: $" + withdrawAmount);
 		CheckingAccount.withdrawChecking(withdrawAmount);

@@ -23,6 +23,10 @@ public class TestBankAccount2 {
 		SavingsAccount.depositSavings(depositAmount);
 		SavingsAccount.printSavingsAccount_S2023_Group6();
 
+		System.out.println("Deposit amount of: $" + depositAmount);
+		SavingsAccount.depositSavings(depositAmount);
+		SavingsAccount.printSavingsAccount_S2023_Group6();
+
 		System.out.println("Withdraw amount of: $" + withdrawAmount);
 		SavingsAccount.withdrawSavings(withdrawAmount);
 		SavingsAccount.printSavingsAccount_S2023_Group6();
