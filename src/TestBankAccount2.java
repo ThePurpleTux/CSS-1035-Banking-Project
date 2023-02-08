@@ -1,10 +1,10 @@
-
 public class TestBankAccount2 {
-  /** Main method */
   	private static double startingBalance;
  	private static double depositAmount;
  	private static double withdrawAmount;
 	private static double feeAmount;
+	
+	/** Main method */
   	public static void main(String[] args) {
 		
 		startingBalance = 99.99;
