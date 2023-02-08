@@ -1,7 +1,7 @@
 public class TestBankAccount1 {
   	private static double startingBalance;
   	private static double depositAmount;
- 	 private static double withdrawAmount;
+ 	private static double withdrawAmount;
   	private static double feeAmount;
   
   /** Main method */

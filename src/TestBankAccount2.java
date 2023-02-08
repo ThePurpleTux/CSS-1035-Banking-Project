@@ -7,13 +7,13 @@ public class TestBankAccount2 {
 	/** Main method */
   	public static void main(String[] args) {
 		
-		startingBalance = 99.99;
-		depositAmount = 100;
-		withdrawAmount = .99;
-		feeAmount = 50;
+		startingBalance = 155.55;
+		depositAmount = 250;
+		withdrawAmount = 15;
+		feeAmount = 30;
 
 		System.out.println("Create Account with Information:");
-		SavingsAccount_S2023_Group6 savingsAcct1 = new SavingsAccount_S2023_Group6("1110", "John", "Doe", "001", startingBalance);
+		SavingsAccount_S2023_Group6 savingsAcct1 = new SavingsAccount_S2023_Group6("2220", "Jane", "Doe", "002", startingBalance);
     	
 		System.out.println("Print Entire Account Info:");
 		System.out.println(savingsAcct1.toString());
