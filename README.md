@@ -5,3 +5,8 @@
 # +unique teamname of classes
 # +template provided in course module
 # +UML diagram for application
+
+
+
+
+add balance check for withdrawing more money then available
