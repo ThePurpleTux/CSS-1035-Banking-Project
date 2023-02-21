@@ -1,3 +1,6 @@
+import Exceptions.LargeDepositException;
+import Exceptions.NegativeBalanceException;
+
 public class TestBankAccount5 {
   	private static double startingBalance;
   	private static double depositAmount;
@@ -20,15 +23,27 @@ public class TestBankAccount5 {
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 
 		System.out.println("Deposit amount of: $" + depositAmount);
-		CheckingAccount.depositChecking(depositAmount);
+		try{
+			CheckingAccount.depositChecking(depositAmount);
+		} catch (LargeDepositException ex) {
+			System.out.println(ex);
+		}
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 		
 		System.out.println("Deposit amount of: $" + depositAmount);
-		CheckingAccount.depositChecking(depositAmount);
+		try{
+			CheckingAccount.depositChecking(depositAmount);
+		} catch (LargeDepositException ex) {
+			System.out.println(ex);
+		}
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 
 		System.out.println("Withdraw amount of: $" + withdrawAmount);
-		CheckingAccount.withdrawChecking(withdrawAmount);
+		try{
+			CheckingAccount.withdrawChecking(withdrawAmount);
+		} catch (NegativeBalanceException ex){
+			System.out.println(ex);
+		}
 		CheckingAccount.printCheckingAccount_S2023_Group6();
 
 		System.out.println("Fee amount of: $" + feeAmount);

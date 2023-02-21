@@ -1,3 +1,6 @@
+import Exceptions.LargeDepositException;
+import Exceptions.NegativeBalanceException;
+
 public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   private String savingAccountNum;
   private double accountBalance;
@@ -10,17 +13,21 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
   }
 
   /** Deposit amount to the savings account. Returns the balance after deposit */
-  public double depositSavings(double depositAmount) {
-    this.accountBalance += depositAmount;
-
-    return this.accountBalance;
+  public double depositSavings(double depositAmount) throws LargeDepositException {
+    if (depositAmount <= 1000000){
+      this.accountBalance += depositAmount;
+      return this.accountBalance;
+    } else
+      throw new LargeDepositException(depositAmount);
   }
 
   /** Withdraw amount from account. Returns the balance after withdrawl */
-  public double withdrawSavings(double withdrawAmount) {
-    this.accountBalance -= withdrawAmount;
-
-    return this.accountBalance;
+  public double withdrawSavings(double withdrawAmount) throws NegativeBalanceException {
+    if ((this.accountBalance -= withdrawAmount) >= 0){
+      this.accountBalance -= withdrawAmount;
+      return this.accountBalance;
+    } else
+      throw new NegativeBalanceException(this.accountBalance -= withdrawAmount);
   }
 
   /** Charge Fees from account. Returns balance after fee */
