@@ -2,12 +2,11 @@ package Exceptions;
 
 /**
  * <b> Large Deposit Exception </b> <br>
- * <br>
  * - As per Bank policy: Exception is thrown when a deposit into a Checking or
  * Savings Account exceeds $1,000,000 <br>
  * - Extends Exception superclass <br>
+ * - Secure Software Design Decision <br>
  * 
- * @apiNote Secure Software Design Decision
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *
  */

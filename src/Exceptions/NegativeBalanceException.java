@@ -2,12 +2,11 @@ package Exceptions;
 
 /**
  * <b> Negative Balance Exception </b> <br>
- * <br>
  * - As per Bank Policy: Exception is thrown when the account balance of a
  * Checking or Savings Account is negative <br>
  * - Extends Exception superclass <br>
+ * - Secure Software Design Decision <br>
  * 
- * @apiNote Secure Software Design Decision
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *
  */

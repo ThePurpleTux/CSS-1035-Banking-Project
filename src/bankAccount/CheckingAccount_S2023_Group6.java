@@ -1,12 +1,12 @@
+package bankAccount;
 import Exceptions.LargeDepositException;
 import Exceptions.NegativeBalanceException;
 
 /**
- * <br>
  * <b> Checking Account Class </b> <br>
  * - Extends Bank Account Class <br>
  * - Contains constructor for Checking Account <br>
- * -
+ * - Contains methods for depositing and withdrawing funds, as well as charging fees <br>
  * 
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *
@@ -16,15 +16,15 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	private double accountBalance;
 
 	/**
-	 * Constructor for Checking Account - extends Bank Account superclass
+	 * Constructor for Checking Account - extends Bank Account superclass <br>
 	 * 
-	 * @apiNote Protected Constructor - Secure Software Design Decision
-	 * @apiNote extends Bank Account superclass
-	 * @param bankAccountNumber
-	 * @param firstName
-	 * @param lastName
-	 * @param checkingAccountNum
-	 * @param accountBalance
+	 * - Protected Constructor - Secure Software Design Decision <br>
+	 * - Extends Bank Account superclass <br>
+	 * @param bankAccountNumber Bank Account Number
+	 * @param firstName First Name
+	 * @param lastName Last Name
+	 * @param checkingAccountNum Checking Account Number
+	 * @param accountBalance Checking Account Balance
 	 */
 	protected CheckingAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName,
 			String checkingAccountNum, double accountBalance) {
@@ -36,7 +36,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Deposit amount to account. Returns balance after deposit
 	 * 
-	 * @param depositAmount
+	 * @param depositAmount Deposit Amount
 	 * @return accountBalance
 	 * @throws LargeDepositException Secure Software Design Decision
 	 */
@@ -51,7 +51,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Withdraw amount from account. Returns balance after withdrawl
 	 * 
-	 * @param withdrawlAmount
+	 * @param withdrawlAmount Withdrawal Amount
 	 * @return accountBalance
 	 * @throws NegativeBalanceException Secure Software Design Decision
 	 */
@@ -66,7 +66,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Charge Fees for account. Returns balance after fee.
 	 * 
-	 * @param fee
+	 * @param fee Fee
 	 * @return accountBalance
 	 */
 	public double chargeFees(double fee) {
@@ -89,7 +89,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Set Checking Account Number
 	 * 
-	 * @param checkingAccountNumber
+	 * @param checkingAccountNumber Checking Account Number
 	 */
 	public void setCheckingAccountNumber(String checkingAccountNumber) {
 		this.checkingAccountNum = checkingAccountNumber;

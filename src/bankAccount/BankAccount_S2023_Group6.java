@@ -1,8 +1,8 @@
+package bankAccount;
 /**
  * <b> Bank Account Class</b> <br>
- * - Contains constructor for Bank Account <br>
- * - <br>
- * - <br>
+ * - Contains constructor, getters, and setters for Bank Account <br>
+ * - Superclass <br>
  * 
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *
@@ -13,12 +13,12 @@ public abstract class BankAccount_S2023_Group6 {
 	private String lastName;
 
 	/**
-	 * Constructor for Bank Account
+	 * Constructor for Bank Account <br>
 	 * 
-	 * @apiNote Protected Constructor - Secure Software Design Decision
-	 * @param bankAccountNumber
-	 * @param firstName
-	 * @param lastName
+	 * - Protected Constructor - Secure Software Design Decision <br>
+	 * @param bankAccountNumber Bank Account Number
+	 * @param firstName First Name
+	 * @param lastName Last Name
 	 */
 	protected BankAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName) {
 		this.bankAccountNumber = bankAccountNumber;
@@ -39,7 +39,7 @@ public abstract class BankAccount_S2023_Group6 {
 	/**
 	 * Set Bank Account Number
 	 * 
-	 * @param bankAccountNumber
+	 * @param bankAccountNumber Bank Account Number
 	 */
 	public void setBankAccountNumber(String bankAccountNumber) {
 		this.bankAccountNumber = bankAccountNumber;
@@ -57,7 +57,7 @@ public abstract class BankAccount_S2023_Group6 {
 	/**
 	 * Set First Name
 	 * 
-	 * @param firstName
+	 * @param firstName First Name
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -75,7 +75,7 @@ public abstract class BankAccount_S2023_Group6 {
 	/**
 	 * Set Last Name
 	 * 
-	 * @param lastName
+	 * @param lastName Last Name
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;

@@ -1,12 +1,12 @@
+package bankAccount;
 import Exceptions.LargeDepositException;
 import Exceptions.NegativeBalanceException;
 
 /**
- * <br>
  * <b> Savings Account Class </b> <br>
  * - Extends Bank Account Class <br>
  * - Contains constructor for Savings Account <br>
- * -
+ * - Contains methods for depositing and withdrawing funds, as well as charging fees <br>
  * 
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *
@@ -16,15 +16,15 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	private double accountBalance;
 
 	/**
-	 * Constructor for Savings Account
+	 * Constructor for Savings Account <br>
 	 * 
-	 * @apiNote Protected Constructor - Secure Software Design Decision
-	 * @apiNote extends Bank Account superclass
-	 * @param bankAccountNumber
-	 * @param firstName
-	 * @param lastName
-	 * @param savingsAccountNum
-	 * @param accountBalance
+	 * - Protected Constructor - Secure Software Design Decision <br>
+	 * - Extends Bank Account superclass <br>
+	 * @param bankAccountNumber Bank Account Number
+	 * @param firstName First Name
+	 * @param lastName Last Name
+	 * @param savingsAccountNum Savings Account Number
+	 * @param accountBalance Account Balance
 	 */
 	protected SavingsAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName,
 			String savingsAccountNum, double accountBalance) {
@@ -36,7 +36,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Deposit amount to the savings account. Returns the balance after deposit
 	 * 
-	 * @param depositAmount
+	 * @param depositAmount Deposit Amount
 	 * @return accountBalance
 	 * @throws LargeDepositException Secure Software Design Decision
 	 */
@@ -51,7 +51,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Withdraw amount from account. Returns the balance after withdraw
 	 * 
-	 * @param withdrawAmount
+	 * @param withdrawAmount Withdraw Amount
 	 * @return accountBalance
 	 * @throws NegativeBalanceException Secure Software Design Decision
 	 */
@@ -66,7 +66,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Charge Fees from account. Returns balance after fee
 	 * 
-	 * @param fee
+	 * @param fee Fee
 	 * @return accountBalance
 	 */
 	public double chargeFees(double fee) {
@@ -88,7 +88,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Set Savings Account Number
 	 * 
-	 * @param SavingsAccountNumber
+	 * @param SavingsAccountNumber Savings Account Number
 	 */
 	public void setSavingsAccountNumber(String SavingsAccountNumber) {
 		this.savingAccountNum = SavingsAccountNumber;
