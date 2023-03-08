@@ -18,6 +18,8 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Constructor for Checking Account - extends Bank Account superclass
 	 * 
+	 * @apiNote Protected Constructor - Secure Software Design Decision
+	 * @apiNote extends Bank Account superclass
 	 * @param bankAccountNumber
 	 * @param firstName
 	 * @param lastName

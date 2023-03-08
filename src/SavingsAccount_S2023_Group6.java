@@ -18,6 +18,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Constructor for Savings Account
 	 * 
+	 * @apiNote Protected Constructor - Secure Software Design Decision
 	 * @apiNote extends Bank Account superclass
 	 * @param bankAccountNumber
 	 * @param firstName

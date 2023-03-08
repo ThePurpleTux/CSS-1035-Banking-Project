@@ -15,6 +15,7 @@ public abstract class BankAccount_S2023_Group6 {
 	/**
 	 * Constructor for Bank Account
 	 * 
+	 * @apiNote Protected Constructor - Secure Software Design Decision
 	 * @param bankAccountNumber
 	 * @param firstName
 	 * @param lastName
