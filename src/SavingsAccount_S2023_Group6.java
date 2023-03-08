@@ -1,12 +1,16 @@
+import Exceptions.LargeDepositException;
+import Exceptions.NegativeBalanceException;
 
 /**
+ * <br>
+ * <b> Savings Account Class </b> <br>
+ * - Extends Bank Account Class <br>
+ * - Contains constructor for Savings Account <br>
+ * -
  * 
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *
  */
-import Exceptions.LargeDepositException;
-import Exceptions.NegativeBalanceException;
-
 public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	private String savingAccountNum;
 	private double accountBalance;
@@ -14,7 +18,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Constructor for Savings Account
 	 * 
-	 * @apiNote Calls superclass Bank Account
+	 * @apiNote extends Bank Account superclass
 	 * @param bankAccountNumber
 	 * @param firstName
 	 * @param lastName
@@ -32,8 +36,8 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * Deposit amount to the savings account. Returns the balance after deposit
 	 * 
 	 * @param depositAmount
-	 * @return
-	 * @throws LargeDepositException
+	 * @return accountBalance
+	 * @throws LargeDepositException Secure Software Design Decision
 	 */
 	public double depositSavings(double depositAmount) throws LargeDepositException {
 		if (depositAmount <= 1000000) {
@@ -44,11 +48,11 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	}
 
 	/**
-	 * Withdraw amount from account. Returns the balance after withdrawl
+	 * Withdraw amount from account. Returns the balance after withdraw
 	 * 
 	 * @param withdrawAmount
-	 * @return
-	 * @throws NegativeBalanceException
+	 * @return accountBalance
+	 * @throws NegativeBalanceException Secure Software Design Decision
 	 */
 	public double withdrawSavings(double withdrawAmount) throws NegativeBalanceException {
 		if ((this.accountBalance -= withdrawAmount) >= 0) {
@@ -62,18 +66,14 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * Charge Fees from account. Returns balance after fee
 	 * 
 	 * @param fee
-	 * @return
+	 * @return accountBalance
 	 */
 	public double chargeFees(double fee) {
 		this.accountBalance -= fee;
 
 		return this.accountBalance;
 	}
-
-	/**
-	 * Getters and Setters
-	 * 
-	 */
+	// Getters and Setters
 
 	/**
 	 * Get Savings Account Number

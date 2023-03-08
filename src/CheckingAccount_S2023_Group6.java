@@ -1,18 +1,22 @@
+import Exceptions.LargeDepositException;
+import Exceptions.NegativeBalanceException;
 
 /**
+ * <br>
+ * <b> Checking Account Class </b> <br>
+ * - Extends Bank Account Class <br>
+ * - Contains constructor for Checking Account <br>
+ * -
  * 
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *
  */
-import Exceptions.LargeDepositException;
-import Exceptions.NegativeBalanceException;
-
 public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	private String checkingAccountNum;
 	private double accountBalance;
 
 	/**
-	 * Constructor for Checking Account - calls super class Bank Account
+	 * Constructor for Checking Account - extends Bank Account superclass
 	 * 
 	 * @param bankAccountNumber
 	 * @param firstName
@@ -32,7 +36,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * 
 	 * @param depositAmount
 	 * @return accountBalance
-	 * @throws LargeDepositException
+	 * @throws LargeDepositException Secure Software Design Decision
 	 */
 	public double depositChecking(double depositAmount) throws LargeDepositException {
 		if (depositAmount <= 1000000) {
@@ -47,7 +51,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * 
 	 * @param withdrawlAmount
 	 * @return accountBalance
-	 * @throws NegativeBalanceException
+	 * @throws NegativeBalanceException Secure Software Design Decision
 	 */
 	public double withdrawChecking(double withdrawlAmount) throws NegativeBalanceException {
 		if ((this.accountBalance -= withdrawlAmount) >= 0) {
@@ -69,9 +73,8 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 		return this.accountBalance;
 	}
 
-	/**
-	 * Getters and setters
-	 */
+	// Getters & Setters
+
 	/**
 	 * Get Checking Account Number
 	 * 
