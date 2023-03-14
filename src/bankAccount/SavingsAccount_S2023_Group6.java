@@ -72,8 +72,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 		if (!WithdrawAmountValid(withdrawAmount))
 			throw new NegativeBalanceException(withdrawAmount);
 
-		subtractFromBalance(withdrawAmount);
-		return this.accountBalance;
+		return subtractFromBalance(withdrawAmount);
 	}
 
 	/**
@@ -107,17 +106,33 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 		this.savingAccountNum = SavingsAccountNumber;
 	}
 
-	private double addToBalance(double input){
-		this.accountBalance += input;
+	/**
+	 * Add A Given Amount To The Account Balance
+	 * @param amount The amount to add
+	 * @return The account balance after adding amount
+	 */
+	private double addToBalance(double amount){
+		this.accountBalance += amount;
 		return this.accountBalance;
 	}
 
-	private void subtractFromBalance(double input) throws NegativeBalanceException{
-		this.accountBalance -= input;
+	/**
+	 * Subtract A Given Amount From The Account Balance
+	 * @param amount The amount to subtract
+	 * @return The account balance after subtracting amount
+	 */
+	private double subtractFromBalance(double amount) throws NegativeBalanceException{
+		this.accountBalance -= amount;
+		return this.accountBalance;
 	}
 
-	private boolean WithdrawAmountValid(double input){
-		return ((this.accountBalance - input) >= 0);
+	/**
+	 * Checks if account balance is high enough to withdraw the requested amount
+	 * @param withdrawAmount the amount to withdraw
+	 * @return true/false - true if after subtracting the withdraw amount the account balance will still be greater than zero. False in all other cases
+	 */
+	private boolean WithdrawAmountValid(double withdrawAmount){
+		return ((this.accountBalance - withdrawAmount) >= 0);
 	}
 
 	/**
