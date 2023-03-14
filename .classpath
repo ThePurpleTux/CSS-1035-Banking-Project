@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="Sample_Final_Project_Template/GeoMetricApp_Inheritance/GeoMetricApp_Inheritance"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/apiguardian-api-1.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/junit-jupiter-5.8.1.jar"/>
