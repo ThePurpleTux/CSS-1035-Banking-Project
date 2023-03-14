@@ -82,9 +82,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * @return accountBalance
 	 */
 	public double chargeFees(double fee) {
-		this.accountBalance -= fee;
-
-		return this.accountBalance;
+		return this.subtractFromBalance(fee);
 	}
 
 	// Getters & Setters
@@ -122,7 +120,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * @param amount The amount to subtract
 	 * @return The account balance after subtracting amount
 	 */
-	private double subtractFromBalance(double amount) throws NegativeBalanceException{
+	private double subtractFromBalance(double amount){
 		this.accountBalance -= amount;
 		return this.accountBalance;
 	}
