@@ -51,8 +51,7 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 		}
 
 		if (depositAmount <= 1000000) {
-			this.accountBalance += depositAmount;
-			return this.accountBalance;
+			return this.addToBalance(depositAmount);
 		} else
 			throw new LargeDepositException(depositAmount);
 	}
@@ -70,11 +69,11 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 			throw new DoubleValidiationException(withdrawlAmount);
 		}
 
-		if ((this.accountBalance -= withdrawlAmount) >= 0) {
-			this.accountBalance -= withdrawlAmount;
-			return this.accountBalance;
-		} else
-			throw new NegativeBalanceException(this.accountBalance -= withdrawlAmount);
+		if (!WithdrawAmountValid(withdrawlAmount))
+			throw new NegativeBalanceException(withdrawlAmount);
+
+		subtractFromBalance(withdrawlAmount);
+		return this.accountBalance;
 	}
 
 	/**
@@ -109,6 +108,19 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 		this.checkingAccountNum = checkingAccountNumber;
 	}
 
+	private double addToBalance(double input){
+		this.accountBalance += input;
+		return this.accountBalance;
+	}
+
+	private void subtractFromBalance(double input) throws NegativeBalanceException{
+		this.accountBalance -= input;
+	}
+
+	private boolean WithdrawAmountValid(double input){
+		return ((this.accountBalance - input) >= 0);
+	}
+
 	/**
 	 * Print the CheckingAccount info
 	 */
@@ -116,5 +128,4 @@ public class CheckingAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 		System.out.println("Checking Account Information: [" + "Account Number: " + checkingAccountNum + "; "
 				+ "Account Balance: $" + accountBalance + "]");
 	}
-
 }

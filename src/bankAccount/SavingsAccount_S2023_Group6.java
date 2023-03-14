@@ -51,8 +51,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 		}
 
 		if (depositAmount <= 1000000) {
-			this.accountBalance += depositAmount;
-			return this.accountBalance;
+			return this.addToBalance(depositAmount);
 		} else
 			throw new LargeDepositException(depositAmount);
 	}
@@ -70,11 +69,11 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 			throw new DoubleValidiationException(withdrawAmount);
 		}
 
-		if ((this.accountBalance -= withdrawAmount) >= 0) {
-			this.accountBalance -= withdrawAmount;
-			return this.accountBalance;
-		} else
-			throw new NegativeBalanceException(this.accountBalance -= withdrawAmount);
+		if (!WithdrawAmountValid(withdrawAmount))
+			throw new NegativeBalanceException(withdrawAmount);
+
+		subtractFromBalance(withdrawAmount);
+		return this.accountBalance;
 	}
 
 	/**
@@ -106,6 +105,19 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 */
 	public void setSavingsAccountNumber(String SavingsAccountNumber) {
 		this.savingAccountNum = SavingsAccountNumber;
+	}
+
+	private double addToBalance(double input){
+		this.accountBalance += input;
+		return this.accountBalance;
+	}
+
+	private void subtractFromBalance(double input) throws NegativeBalanceException{
+		this.accountBalance -= input;
+	}
+
+	private boolean WithdrawAmountValid(double input){
+		return ((this.accountBalance - input) >= 0);
 	}
 
 	/**
