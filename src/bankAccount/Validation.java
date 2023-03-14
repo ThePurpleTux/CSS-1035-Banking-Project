@@ -16,9 +16,10 @@ public class Validation {
      * @param regex The regex to use for validation
      * @return true/false - Returns true if match was found and false in all other cases
      */
-    public static boolean ValidateInput(String input, String regex) {
+    public static <T> boolean ValidateInput(T input, String regex) {
+        String inputString = String.valueOf(input);
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = pattern.matcher(inputString);
         return matcher.find();
     }
 }
