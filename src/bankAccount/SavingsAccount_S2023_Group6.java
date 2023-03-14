@@ -1,6 +1,10 @@
 package bankAccount;
+import Exceptions.DoubleValidiationException;
 import Exceptions.LargeDepositException;
 import Exceptions.NegativeBalanceException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <b> Savings Account Class </b> <br>
@@ -26,8 +30,8 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * @param savingsAccountNum Savings Account Number
 	 * @param accountBalance Account Balance
 	 */
-	protected SavingsAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName,
-			String savingsAccountNum, double accountBalance) {
+	public SavingsAccount_S2023_Group6(String bankAccountNumber, String firstName, String lastName,
+									   String savingsAccountNum, double accountBalance) {
 		super(bankAccountNumber, firstName, lastName);
 		this.savingAccountNum = savingsAccountNum;
 		this.accountBalance = accountBalance;
@@ -40,7 +44,12 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * @return accountBalance
 	 * @throws LargeDepositException Secure Software Design Decision
 	 */
-	public double depositSavings(double depositAmount) throws LargeDepositException {
+	public double depositSavings(double depositAmount) throws LargeDepositException, DoubleValidiationException {
+		// Input Validation
+		if (!Validation.ValidateInput(Double.toString(depositAmount), "^[0-9]+$")){
+			throw new DoubleValidiationException(depositAmount);
+		}
+
 		if (depositAmount <= 1000000) {
 			this.accountBalance += depositAmount;
 			return this.accountBalance;
@@ -55,7 +64,12 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 * @return accountBalance
 	 * @throws NegativeBalanceException Secure Software Design Decision
 	 */
-	public double withdrawSavings(double withdrawAmount) throws NegativeBalanceException {
+	public double withdrawSavings(double withdrawAmount) throws NegativeBalanceException, DoubleValidiationException {
+		// Input Validation
+		if (!Validation.ValidateInput(Double.toString(withdrawAmount), "^[0-9]+$")){
+			throw new DoubleValidiationException(withdrawAmount);
+		}
+
 		if ((this.accountBalance -= withdrawAmount) >= 0) {
 			this.accountBalance -= withdrawAmount;
 			return this.accountBalance;
