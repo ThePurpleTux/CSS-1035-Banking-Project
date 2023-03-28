@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
  * - Responsible for validating input throughout the application
  * - Contains methods for validating each data type used in the application
  */
-public class Validation {
+public class Extensions {
 
     /**
      * Validate a Given input - Takes an input and a regex query (both in string form) and attempts to find a match for the query within the input
