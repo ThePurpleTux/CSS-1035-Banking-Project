@@ -1,8 +1,20 @@
 package bankAccount;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Main runner for the app
 public class Main {
@@ -22,17 +34,7 @@ public class Main {
 
             }
 
-            StringBuilder banner = new StringBuilder();
-            banner.append("\n\n\n\n");
-            banner.append("Menu\n");
-            banner.append("------------------------\n");
-            banner.append("1. Register new bank account\n");
-            banner.append("2. Register new savings account\n");
-            banner.append("3. Register new checking account\n\n");
-            banner.append("4. Exit\n\n");
-            banner.append("Please enter a number: ");
-
-            System.out.println(banner.toString());
+            System.out.println(Menu());
 
             int choice = scanner.nextInt();
 
@@ -109,7 +111,16 @@ public class Main {
 
             if (choice == 4){
                 System.out.println("\n\nThanks for banking with us!");
-                break;
+                System.out.println("\nSaving Data...");
+
+                try{
+                    System.out.println(SaveData(_accountList));
+                } catch (IOException e){
+                    System.out.println(e);
+                }finally {
+                    scanner.close();
+                    break;
+                }
             }
 
             System.out.println("Choice not recognized. Please try again...");
@@ -117,12 +128,26 @@ public class Main {
 
     }
 
+    static String Menu(){
+        StringBuilder banner = new StringBuilder();
+        banner.append("\n\n\n\n");
+        banner.append("Menu\n");
+        banner.append("------------------------\n");
+        banner.append("1. Register new bank account\n");
+        banner.append("2. Register new savings account\n");
+        banner.append("3. Register new checking account\n\n");
+        banner.append("4. Exit\n\n");
+        banner.append("Please enter a number: ");
+
+        return banner.toString();
+    }
+
     static BankAccount_S2023_Group6 RegisterBankAccount(String firstName, String lastName){
-        return new BankAccount_S2023_Group6(GenAccountNumber(), firstName, lastName);
+        return new BankAccount_S2023_Group6(Extensions.GenAccountNumber(), firstName, lastName);
     }
 
     static String RegisterCheckingAccount(BankAccount_S2023_Group6 account){
-        CheckingAccount_S2023_Group6 newAccount = new CheckingAccount_S2023_Group6(account.getBankAccountNumber(), account.getFirstName(), account.getLastName(), GenAccountNumber(), 0);
+        CheckingAccount_S2023_Group6 newAccount = new CheckingAccount_S2023_Group6(account.getBankAccountNumber(), account.getFirstName(), account.getLastName(), Extensions.GenAccountNumber(), 0);
 
         account.addCheckingAccount(newAccount);
 
@@ -130,7 +155,7 @@ public class Main {
     }
 
     static String RegisterSavingsAccount(BankAccount_S2023_Group6 account){
-        SavingsAccount_S2023_Group6 newAccount = new SavingsAccount_S2023_Group6(account.getBankAccountNumber(), account.getFirstName(), account.getLastName(), GenAccountNumber(), 0);
+        SavingsAccount_S2023_Group6 newAccount = new SavingsAccount_S2023_Group6(account.getBankAccountNumber(), account.getFirstName(), account.getLastName(), Extensions.GenAccountNumber(), 0);
 
         account.addSavingsAccount(newAccount);
 
@@ -140,6 +165,18 @@ public class Main {
     static ArrayList<BankAccount_S2023_Group6> loadBankAccount(ArrayList<BankAccount_S2023_Group6> accountList, BankAccount_S2023_Group6 account){
         accountList.add(account);
         return accountList;
+    }
+
+    static ArrayList<BankAccount_S2023_Group6> loadFromFile(File file, ArrayList<BankAccount_S2023_Group6> accountList) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+        Pattern pattern = Pattern.compile("\\[(.*?)\\]");
+        while (scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            Matcher matcher = pattern.matcher(line);
+            if (matcher.find()){
+                String[] parts = matcher.group(1).split(", ");
+            }
+        }
     }
 
     static ArrayList<String> GetBankAccountNums(ArrayList<BankAccount_S2023_Group6> accounts){
@@ -152,17 +189,22 @@ public class Main {
         return accountNums;
     }
 
-    // https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-z-and-0-9-in-java
-    static String GenAccountNumber(){
-        String SALT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < SALT.length()){
-            int index = (int) (rnd.nextFloat() * SALT.length());
-            salt.append(SALT.charAt(index));
+    static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts) throws IOException {
+        Charset utf8 = StandardCharsets.UTF_8;
+        List<String> data = null;
+        File outfile = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
+        File directory = new File(System.getProperty("user.home") + File.separator + "Banking");
+
+        if (!directory.exists()){
+            directory.mkdir();
         }
 
-        String saltStr = salt.toString();
-        return saltStr;
+        PrintWriter writer = new PrintWriter(outfile);
+        for (BankAccount_S2023_Group6 account: accounts) {
+            writer.println(account.toString());
+        }
+        writer.close();
+
+        return "Data written to file: " + outfile.getAbsoluteFile();
     }
 }
