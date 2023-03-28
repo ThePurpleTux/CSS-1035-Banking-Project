@@ -1,4 +1,7 @@
 package bankAccount;
+
+import java.util.ArrayList;
+
 /**
  * <b> Bank Account Class</b> <br>
  * - Contains constructor, getters, and setters for Bank Account <br>
@@ -7,10 +10,13 @@ package bankAccount;
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *
  */
-public abstract class BankAccount_S2023_Group6 {
+public class BankAccount_S2023_Group6 {
 	private String bankAccountNumber;
 	private String firstName;
 	private String lastName;
+
+	public ArrayList<CheckingAccount_S2023_Group6> _CheckingList;
+	public ArrayList<SavingsAccount_S2023_Group6> _SavingsList;
 
 	/**
 	 * Constructor for Bank Account <br>
@@ -24,6 +30,9 @@ public abstract class BankAccount_S2023_Group6 {
 		this.bankAccountNumber = bankAccountNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
+
+		this._CheckingList = new ArrayList<>();
+		this._SavingsList = new ArrayList<>();
 	}
 
 	// Getters and Setters
@@ -79,6 +88,22 @@ public abstract class BankAccount_S2023_Group6 {
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public ArrayList<CheckingAccount_S2023_Group6> getCheckingAccounts(){
+		return _CheckingList;
+	}
+
+	public ArrayList<SavingsAccount_S2023_Group6> getSavingsAccounts(){
+		return _SavingsList;
+	}
+
+	public void addCheckingAccount(CheckingAccount_S2023_Group6 account){
+		_CheckingList.add(account);
+	}
+
+	public void addSavingsAccount(SavingsAccount_S2023_Group6 account){
+		_SavingsList.add(account);
 	}
 
 	/**
