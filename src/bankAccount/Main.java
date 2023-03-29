@@ -213,6 +213,9 @@ public class Main {
         return accountNums;
     }
 
+    /*The data file is stored in cleartext, its very easy for an attacker to 
+    * read off this file, the file needs to be encrypted 
+    */ 
     static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts) throws IOException {
         Charset utf8 = StandardCharsets.UTF_8;
         List<String> data = null;
