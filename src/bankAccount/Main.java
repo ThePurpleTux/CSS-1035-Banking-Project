@@ -35,6 +35,9 @@ public class Main {
 
         System.out.println("CSS_1035_Banking_App");
 
+        /*There's no input validation on any of the user input, an attacker 
+         *can add their code or the user might type something to stop the application
+        */
         while (true){
 
             try{
@@ -202,6 +205,12 @@ public class Main {
         scanner.close();
         return accountList;
     }
+
+    /*Our bank account application uses a bank account number to organize everything  
+     * like user information and the many bank accounts under their name.  
+     * The risk, in this case, is the bank account number isn't protected and  
+     * all the attacker needs is the user's bank account number to access the user's information and accounts.
+    */
 
     static ArrayList<String> GetBankAccountNums(ArrayList<BankAccount_S2023_Group6> accounts){
         ArrayList<String> accountNums = new ArrayList<String>();
