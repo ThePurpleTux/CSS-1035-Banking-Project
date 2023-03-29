@@ -4,14 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,10 +17,21 @@ import java.util.regex.Pattern;
 // Main runner for the app
 public class Main {
     public static void main(String[] args){
+        File outfile = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
         ArrayList<BankAccount_S2023_Group6> _accountList = new ArrayList<BankAccount_S2023_Group6>();
         BankAccount_S2023_Group6 currentAccount = null;
-
         Scanner scanner = new Scanner(System.in);
+
+        if (outfile.exists()){
+            try {
+                LoadFromFile(outfile);
+            } catch (FileNotFoundException e){
+                System.out.println(e);
+            }
+        }
+
+
+
 
         System.out.println("CSS_1035_Banking_App");
 
@@ -52,7 +61,7 @@ public class Main {
                 String lastName = scanner.nextLine();
 
                 BankAccount_S2023_Group6 account = RegisterBankAccount(firstName, lastName);
-                loadBankAccount(_accountList, account);
+                LoadBankAccount(_accountList, account);
                 System.out.println(String.format("Account Created. \nAccount Number: %s", account.getBankAccountNumber()));
 
                 continue;
@@ -123,9 +132,14 @@ public class Main {
                 }
             }
 
+            if (choice == 5){
+                for (BankAccount_S2023_Group6 account: _accountList) {
+                    System.out.println(account);
+                }
+            }
+
             System.out.println("Choice not recognized. Please try again...");
         }
-
     }
 
     static String Menu(){
@@ -162,21 +176,31 @@ public class Main {
         return newAccount.getSavingsAccountNumber();
     }
 
-    static ArrayList<BankAccount_S2023_Group6> loadBankAccount(ArrayList<BankAccount_S2023_Group6> accountList, BankAccount_S2023_Group6 account){
+    static ArrayList<BankAccount_S2023_Group6> LoadBankAccount(ArrayList<BankAccount_S2023_Group6> accountList, BankAccount_S2023_Group6 account){
         accountList.add(account);
         return accountList;
     }
 
-    static ArrayList<BankAccount_S2023_Group6> loadFromFile(File file, ArrayList<BankAccount_S2023_Group6> accountList) throws FileNotFoundException {
+    static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file) throws FileNotFoundException {
+        ArrayList<BankAccount_S2023_Group6> accountList = new ArrayList<>();
         Scanner scanner = new Scanner(file);
         Pattern pattern = Pattern.compile("\\[(.*?)\\]");
+
         while (scanner.hasNextLine()){
             String line = scanner.nextLine();
             Matcher matcher = pattern.matcher(line);
             if (matcher.find()){
                 String[] parts = matcher.group(1).split(", ");
+                String bankAccountNumber = parts[0].split("=")[1];
+                String firstName = parts[1].split("=")[1];
+                String lastName = parts[2].split("=")[1];
+
+                BankAccount_S2023_Group6 bankAccount = new BankAccount_S2023_Group6(bankAccountNumber, firstName, lastName);
+                accountList.add(bankAccount);
             }
         }
+        scanner.close();
+        return accountList;
     }
 
     static ArrayList<String> GetBankAccountNums(ArrayList<BankAccount_S2023_Group6> accounts){
