@@ -121,7 +121,7 @@ public class Main {
                 continue;
             }
 
-            if (choice == 4){
+            if (choice == 0){
                 System.out.println("\n\nThanks for banking with us!");
                 System.out.println("\nSaving Data...");
 
