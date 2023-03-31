@@ -24,7 +24,7 @@ public class Main {
 
         if (outfile.exists()){
             try {
-                LoadFromFile(outfile);
+                _accountList = LoadFromFile(outfile);
             } catch (FileNotFoundException e){
                 System.out.println(e);
             }
@@ -40,13 +40,53 @@ public class Main {
         */
         while (true){
 
-            try{
-                Thread.sleep(500);
-            }catch (InterruptedException e){
+            if (currentAccount != null){
+                // Display logged in menu
+                System.out.println(LoggedInMenu());
 
+                int choice = scanner.nextInt();
+
+                if (choice == 1){
+                    StringBuilder accountInfo = new StringBuilder();
+                    accountInfo.append("\nAccount Info: ");
+                    accountInfo.append("\nName: " + currentAccount.getFirstName() + " " + currentAccount.getLastName());
+                    accountInfo.append("\nAccount Number: " + currentAccount.getBankAccountNumber());
+                    accountInfo.append("\nChecking Accounts: ");
+
+                    for (CheckingAccount_S2023_Group6 account: currentAccount.getCheckingAccounts()) {
+                        accountInfo.append(account);
+                    }
+
+                    for (SavingsAccount_S2023_Group6 account: currentAccount.getSavingsAccounts()) {
+                        accountInfo.append(account);
+                    }
+
+                    System.out.println(accountInfo);
+                }
+
+                if (choice == 2){
+                    System.out.println("Register new savings account\n");
+                    System.out.println("-----------------------------\n");
+
+                    System.out.println(String.format("Creating new savings account for account number: %s", currentAccount.getBankAccountNumber()));
+                    String savingsAccountNum = RegisterSavingsAccount(currentAccount);
+                    System.out.println(String.format("Savings accocunt created with account number: %s for Bank Account %s",savingsAccountNum, currentAccount.getBankAccountNumber()));
+                }
+
+                if (choice == 3){
+                    System.out.println("Register new checking account\n");
+                    System.out.println("-----------------------------\n");
+                    System.out.println("Please enter your bank account number: ");
+
+                    System.out.println(String.format("Creating new checking account for account number: %s", currentAccount.getBankAccountNumber()));
+                    String checkingAccountNum = RegisterCheckingAccount(currentAccount);
+                    System.out.println(String.format("Checking account created with account number: %s for Bank Account %s",checkingAccountNum, currentAccount.getBankAccountNumber()));
+                }
+
+                continue;
             }
 
-            System.out.println(Menu());
+            System.out.println(MainMenu());
 
             int choice = scanner.nextInt();
 
@@ -71,54 +111,26 @@ public class Main {
             }
 
             if (choice == 2){
-                System.out.println("Register new savings account\n");
-                System.out.println("-----------------------------\n");
-                System.out.println("Please enter your bank account number: ");
+                scanner.nextLine(); //consume left over input
 
-                scanner.nextLine(); //consume leftover input
+                System.out.println("\nEnter your bank account number: ");
                 String accountNum = scanner.nextLine();
-                if (!GetBankAccountNums(_accountList).contains(accountNum)){
-                    System.out.println("Account not found.");
+
+                BankAccount_S2023_Group6 account = LogIn(accountNum, _accountList);
+                if (account != null){
+                    // update current account
+                    currentAccount = account;
+                    System.out.println("\nLogin Success");
+                    System.out.println("\nAccount Info: ");
+                    System.out.printf("\n%s%n", currentAccount);
+
                     continue;
                 }
 
-                for (BankAccount_S2023_Group6 account : _accountList) {
-                    if (account.getBankAccountNumber().equals(accountNum)){
-                        currentAccount = account;
-                        System.out.println(currentAccount.getBankAccountNumber());
-                    }
-                }
-                System.out.println(String.format("Creating new savings account for account number: %s", currentAccount.getBankAccountNumber()));
-                String savingsAccountNum = RegisterSavingsAccount(currentAccount);
-                System.out.println(String.format("Savings accocunt created with account number: %s for Bank Account %s",savingsAccountNum, currentAccount.getBankAccountNumber()));
-
+                //default it to not log in
+                System.out.println("\nAccount not found...");
                 continue;
-            }
 
-            if (choice == 3){
-                System.out.println("Register new checking account\n");
-                System.out.println("-----------------------------\n");
-                System.out.println("Please enter your bank account number: ");
-
-                scanner.nextLine(); //consume leftover input
-
-                String accountNum = scanner.nextLine();
-                if (!GetBankAccountNums(_accountList).contains(accountNum)){
-                    System.out.println("Account not found.");
-                    continue;
-                }
-
-                for (BankAccount_S2023_Group6 account : _accountList) {
-                    if (account.getBankAccountNumber().equals(accountNum)){
-                        currentAccount = account;
-                        System.out.println(currentAccount.getBankAccountNumber());
-                    }
-                }
-                System.out.println(String.format("Creating new checking account for account number: %s", currentAccount.getBankAccountNumber()));
-                String checkingAccountNum = RegisterCheckingAccount(currentAccount);
-                System.out.println(String.format("Checking account created with account number: %s for Bank Account %s",checkingAccountNum, currentAccount.getBankAccountNumber()));
-
-                continue;
             }
 
             if (choice == 0){
@@ -135,26 +147,42 @@ public class Main {
                 }
             }
 
-            if (choice == 5){
-                for (BankAccount_S2023_Group6 account: _accountList) {
-                    System.out.println(account);
-                }
+            if (choice == 99){
+
+                System.out.println(_accountList);
+                //for (BankAccount_S2023_Group6 account: _accountList) {
+                //    System.out.println(account);
+
+                continue;
+                //}
             }
 
             System.out.println("Choice not recognized. Please try again...");
+            scanner.nextLine(); // Consume left over input
         }
     }
 
-    static String Menu(){
+    static String MainMenu(){
         StringBuilder banner = new StringBuilder();
         banner.append("\n\n\n\n");
         banner.append("Menu\n");
         banner.append("------------------------\n");
         banner.append("1. Register new bank account\n");
-        banner.append("2. Register new savings account\n");
-        banner.append("3. Register new checking account\n\n");
-        banner.append("4. Exit\n\n");
+        banner.append("2. Log-in to existing bank account\n\n");
+        banner.append("0. Exit\n\n");
         banner.append("Please enter a number: ");
+
+        return banner.toString();
+    }
+
+    static String LoggedInMenu(){
+        StringBuilder banner = new StringBuilder();
+        banner.append("\n\n\n\n");
+        banner.append("Menu\n");
+        banner.append("------------------------\n");
+        banner.append("1. List Account Into");
+        banner.append("2. Register Savings Account");
+        banner.append("3. Register Checking Account");
 
         return banner.toString();
     }
@@ -194,9 +222,9 @@ public class Main {
             Matcher matcher = pattern.matcher(line);
             if (matcher.find()){
                 String[] parts = matcher.group(1).split(", ");
-                String bankAccountNumber = parts[0].split("=")[1];
-                String firstName = parts[1].split("=")[1];
-                String lastName = parts[2].split("=")[1];
+                String bankAccountNumber = (parts[0].split("= ")[1]).trim();
+                String firstName = (parts[1].split("= ")[1]).trim();
+                String lastName = (parts[2].split("= ")[1]).trim();
 
                 BankAccount_S2023_Group6 bankAccount = new BankAccount_S2023_Group6(bankAccountNumber, firstName, lastName);
                 accountList.add(bankAccount);
@@ -242,5 +270,13 @@ public class Main {
         writer.close();
 
         return "Data written to file: " + outfile.getAbsoluteFile();
+    }
+
+    static BankAccount_S2023_Group6 LogIn(String accountNum, ArrayList<BankAccount_S2023_Group6> accounts){
+        for (BankAccount_S2023_Group6 account: accounts) {
+            if (account.getBankAccountNumber().equals(accountNum))
+                return account;
+        }
+        return null;
     }
 }
