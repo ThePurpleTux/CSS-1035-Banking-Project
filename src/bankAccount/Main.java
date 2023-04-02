@@ -1,15 +1,18 @@
 package bankAccount;
 
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,14 +20,17 @@ import java.util.regex.Pattern;
 // Main runner for the app
 public class Main {
     public static void main(String[] args){
-        File outfile = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
+        File outfile = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.enc");
         ArrayList<BankAccount_S2023_Group6> _accountList = new ArrayList<BankAccount_S2023_Group6>();
         BankAccount_S2023_Group6 currentAccount = null;
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("\nEnter Password: ");
+        char[] password = scanner.nextLine().toCharArray();
+
         if (outfile.exists()){
             try {
-                _accountList = LoadFromFile(outfile);
+                _accountList = LoadFromFile(outfile, password);
             } catch (FileNotFoundException e){
                 System.out.println(e);
             }
@@ -54,10 +60,13 @@ public class Main {
                     accountInfo.append("\nChecking Accounts: ");
 
                     for (CheckingAccount_S2023_Group6 account: currentAccount.getCheckingAccounts()) {
+                        accountInfo.append("\n\t");
                         accountInfo.append(account);
                     }
 
+                    accountInfo.append("\nSavings Accounts: ");
                     for (SavingsAccount_S2023_Group6 account: currentAccount.getSavingsAccounts()) {
+                        accountInfo.append("\n\t");
                         accountInfo.append(account);
                     }
 
@@ -70,7 +79,7 @@ public class Main {
 
                     System.out.println(String.format("Creating new savings account for account number: %s", currentAccount.getBankAccountNumber()));
                     String savingsAccountNum = RegisterSavingsAccount(currentAccount);
-                    System.out.println(String.format("Savings accocunt created with account number: %s for Bank Account %s",savingsAccountNum, currentAccount.getBankAccountNumber()));
+                    System.out.println(String.format("Savings account created with account number: %s for Bank Account %s",savingsAccountNum, currentAccount.getBankAccountNumber()));
                 }
 
                 if (choice == 3){
@@ -81,6 +90,11 @@ public class Main {
                     System.out.println(String.format("Creating new checking account for account number: %s", currentAccount.getBankAccountNumber()));
                     String checkingAccountNum = RegisterCheckingAccount(currentAccount);
                     System.out.println(String.format("Checking account created with account number: %s for Bank Account %s",checkingAccountNum, currentAccount.getBankAccountNumber()));
+                }
+
+                if (choice == 0){
+                    System.out.println("\nLogging Out...");
+                    currentAccount = null;
                 }
 
                 continue;
@@ -138,15 +152,20 @@ public class Main {
                 System.out.println("\nSaving Data...");
 
                 try{
-                    System.out.println(SaveData(_accountList));
+                    System.out.println(SaveData(_accountList, Extensions.GenerateKeyFromPassword(password)));
                 } catch (IOException e){
                     System.out.println(e);
-                }finally {
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                } catch (InvalidKeySpecException e) {
+                    throw new RuntimeException(e);
+                } finally {
                     scanner.close();
                     break;
                 }
             }
 
+            // Testing option. Prints all loaded accounts
             if (choice == 99){
 
                 System.out.println(_accountList);
@@ -183,6 +202,8 @@ public class Main {
         banner.append("1. List Account Into");
         banner.append("2. Register Savings Account");
         banner.append("3. Register Checking Account");
+        banner.append("0. Log Out");
+
 
         return banner.toString();
     }
@@ -212,9 +233,28 @@ public class Main {
         return accountList;
     }
 
-    static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file) throws FileNotFoundException {
+    static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file, char[] password) throws FileNotFoundException {
         ArrayList<BankAccount_S2023_Group6> accountList = new ArrayList<>();
-        Scanner scanner = new Scanner(file);
+        SecretKey loadedSecretKey = null;
+        try {
+            loadedSecretKey = Extensions.LoadAESKey(password, file.getAbsolutePath());
+            Extensions.Decrypt(file.getAbsolutePath(), file.getParent() + File.separator + "data.dat", loadedSecretKey);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchPaddingException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeyException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        Scanner scanner = new Scanner(file.getParent() + "data.dat");
         Pattern pattern = Pattern.compile("\\[(.*?)\\]");
 
         while (scanner.hasNextLine()){
@@ -250,26 +290,43 @@ public class Main {
         return accountNums;
     }
 
-    /*The data file is stored in cleartext, its very easy for an attacker to 
+    /*The data file is stored in cleartext, it's very easy for an attacker to
     * read off this file, the file needs to be encrypted 
     */ 
-    static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts) throws IOException {
-        Charset utf8 = StandardCharsets.UTF_8;
-        List<String> data = null;
-        File outfile = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
+    static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts, SecretKey secretKey) throws IOException {
+        File plainfile = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
+        File encfile = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.enc");
         File directory = new File(System.getProperty("user.home") + File.separator + "Banking");
 
         if (!directory.exists()){
             directory.mkdir();
         }
 
-        PrintWriter writer = new PrintWriter(outfile);
+        PrintWriter writer = new PrintWriter(plainfile);
         for (BankAccount_S2023_Group6 account: accounts) {
             writer.println(account.toString());
+
+            //for (SavingsAccount_S2023_Group6 savings: account._SavingsList) {
+            //    writer.println("\t" + savings);
+            //}
+
+            //for (CheckingAccount_S2023_Group6 checking: account._CheckingList){
+            //    writer.println("\t" + checking);
+            //}
         }
         writer.close();
 
-        return "Data written to file: " + outfile.getAbsoluteFile();
+        try {
+            Extensions.Encrypt(plainfile.getAbsolutePath(), encfile.getAbsolutePath(), secretKey);
+        } catch (NoSuchPaddingException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeyException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "Data written to file: " + encfile.getAbsoluteFile();
     }
 
     static BankAccount_S2023_Group6 LogIn(String accountNum, ArrayList<BankAccount_S2023_Group6> accounts){

@@ -1,5 +1,16 @@
 package bankAccount;
 
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -36,6 +47,72 @@ public class Extensions {
 
         String saltStr = salt.toString();
         return saltStr;
+    }
+
+    public static SecretKey GenerateKeyFromPassword(char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] salt = new byte[16];
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(salt);
+
+        KeySpec keySpec = new PBEKeySpec(password, salt, 65536, 256);
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        byte[] keyBytes = keyFactory.generateSecret(keySpec).getEncoded();
+
+        SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
+        return secretKey;
+    }
+
+    public static SecretKey LoadAESKey(char[] password, String filePath) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] salt = new byte[16];
+
+        FileInputStream inputStream = new FileInputStream(filePath);
+        inputStream.read(salt);
+
+        KeySpec keySpec = new PBEKeySpec(password, salt, 65536, 256);
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        byte[] keyBytes = keyFactory.generateSecret(keySpec).getEncoded();
+
+        SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
+        return secretKey;
+    }
+
+    public static void Encrypt(String inputFile, String outputFile, SecretKey secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException {
+        Cipher cipher= Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        byte[] iv = cipher.getIV();
+
+        FileInputStream inputStream = new FileInputStream(inputFile);
+        FileOutputStream outputStream = new FileOutputStream(outputFile);
+        outputStream.write(iv);
+
+        PublicCipherOutputStream cipherOutputStream = new PublicCipherOutputStream(outputStream, cipher);
+        byte[] buffer = new byte[8192];
+        int count;
+        while ((count = inputStream.read(buffer)) > 0 ) {
+            cipherOutputStream.write(buffer, 0, count);
+        }
+        cipherOutputStream.flush();
+    }
+
+    public static void Decrypt(String inputFile, String outputFile, SecretKey secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, IOException, InvalidAlgorithmParameterException, InvalidKeyException {
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        byte[] iv = new byte[16];
+
+        try (FileInputStream inputStream = new FileInputStream(inputFile)) {
+            inputStream.read(iv);
+            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
+
+            try (FileOutputStream outputStream = new FileOutputStream(outputFile);
+                 CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher)) {
+                byte[] buffer = new byte[8192];
+                int count;
+                while ((count = cipherInputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, count);
+                }
+                outputStream.flush();
+            }
+        }
     }
 }
 
