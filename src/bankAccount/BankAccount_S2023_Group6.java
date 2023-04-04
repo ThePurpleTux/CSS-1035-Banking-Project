@@ -15,8 +15,8 @@ public class BankAccount_S2023_Group6 {
 	private String firstName;
 	private String lastName;
 
-	public ArrayList<CheckingAccount_S2023_Group6> _CheckingList;
-	public ArrayList<SavingsAccount_S2023_Group6> _SavingsList;
+	private ArrayList<CheckingAccount_S2023_Group6> _CheckingList;
+	private ArrayList<SavingsAccount_S2023_Group6> _SavingsList;
 
 	/**
 	 * Constructor for Bank Account <br>

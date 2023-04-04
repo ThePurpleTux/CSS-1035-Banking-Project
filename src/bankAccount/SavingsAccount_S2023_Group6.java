@@ -136,8 +136,9 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	/**
 	 * Print the SavingAccount info
 	 */
-	public void printSavingsAccount_S2023_Group6() {
-		System.out.println("Savings Account Information: [" + "Account Number: " + savingAccountNum
-				+ "; Account Balance: $" + accountBalance + "]");
+	@Override
+	public String toString() {
+		return "Savings Account Information: [" + "Account Number: " + this.savingAccountNum
+				+ "; Account Balance: $" + this.accountBalance + "]";
 	}
 }

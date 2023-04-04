@@ -22,8 +22,7 @@ public class TestBankAccount3 {
 		SavingsAccount_S2023_Group6 SavingsAccount = new SavingsAccount_S2023_Group6("3330", "James", "Jones", "003", startingBalance);
     	
 		System.out.println("Print Entire Bank Account Info:");
-		System.out.println(SavingsAccount.toString());
-		SavingsAccount.printSavingsAccount_S2023_Group6();
+		System.out.println(SavingsAccount);
 
 		System.out.println("Deposit amount of: $" + depositAmount);
 		try{
@@ -33,7 +32,7 @@ public class TestBankAccount3 {
 		} catch (DoubleValidiationException ex){
 			System.out.println(ex);
 		}
-		SavingsAccount.printSavingsAccount_S2023_Group6();
+		System.out.println(SavingsAccount);
 
 		System.out.println("Withdraw amount of: $" + withdrawAmount);
 		try {
@@ -43,7 +42,7 @@ public class TestBankAccount3 {
 		} catch (DoubleValidiationException ex){
 			System.out.println(ex);
 		}
-		SavingsAccount.printSavingsAccount_S2023_Group6();
+		System.out.println(SavingsAccount);
 
 		System.out.println("Withdraw amount of: $" + withdrawAmount);
 		try {
@@ -53,14 +52,14 @@ public class TestBankAccount3 {
 		} catch (DoubleValidiationException ex){
 			System.out.println(ex);
 		}
-		SavingsAccount.printSavingsAccount_S2023_Group6();
+		System.out.println(SavingsAccount);
 
 		System.out.println("Fee amount of: $" + feeAmount);
 		SavingsAccount.chargeFees(feeAmount);
-		SavingsAccount.printSavingsAccount_S2023_Group6();
+		System.out.println(SavingsAccount);
 
 		System.out.println("Fee amount of: $" + feeAmount);
 		SavingsAccount.chargeFees(feeAmount);
-		SavingsAccount.printSavingsAccount_S2023_Group6();
-	}
+		System.out.println(SavingsAccount);
+	  }
 }

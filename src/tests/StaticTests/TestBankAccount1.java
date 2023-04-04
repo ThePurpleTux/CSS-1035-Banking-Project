@@ -23,7 +23,7 @@ public class TestBankAccount1 {
     	
 		System.out.println("Print Entire Bank Account Info:");
 		System.out.println(SavingsAccount.toString());
-		SavingsAccount.printSavingsAccount_S2023_Group6();
+		System.out.println(SavingsAccount);
 
 		System.out.println("Deposit amount of: $" + depositAmount);
 		try{
@@ -33,7 +33,7 @@ public class TestBankAccount1 {
 		} catch (DoubleValidiationException ex){
 			System.out.println(ex);
 		}
-		SavingsAccount.printSavingsAccount_S2023_Group6();
+		System.out.println(SavingsAccount);
 
 		System.out.println("Withdraw amount of: $" + withdrawAmount);
 		try {
@@ -43,10 +43,10 @@ public class TestBankAccount1 {
 		} catch (DoubleValidiationException ex){
 			System.out.println(ex);
 		}
-		SavingsAccount.printSavingsAccount_S2023_Group6();
+		System.out.println(SavingsAccount);
 
 		System.out.println("Fee amount of: $" + feeAmount);
 		SavingsAccount.chargeFees(feeAmount);
-		SavingsAccount.printSavingsAccount_S2023_Group6();
-	}
+		System.out.println(SavingsAccount);
+	  }
 }

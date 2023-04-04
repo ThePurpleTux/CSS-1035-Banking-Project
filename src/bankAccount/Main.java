@@ -266,15 +266,18 @@ public class Main {
 
         PrintWriter writer = new PrintWriter(data);
         for (BankAccount_S2023_Group6 account: accounts) {
+            // Write account to file
             writer.println(account.toString());
 
-            //for (SavingsAccount_S2023_Group6 savings: account._SavingsList) {
-            //    writer.println("\t" + savings);
-            //}
+            if (account.getSavingsAccounts() != null){
+                ArrayList<SavingsAccount_S2023_Group6> savings = account.getSavingsAccounts();
 
-            //for (CheckingAccount_S2023_Group6 checking: account._CheckingList){
-            //    writer.println("\t" + checking);
-            //}
+                // write savings accounts to file
+                for (SavingsAccount_S2023_Group6 savingsAccount: savings){
+                    writer.println(savingsAccount);
+                }
+            }
+
         }
         writer.close();
 
