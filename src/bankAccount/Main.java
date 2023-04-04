@@ -216,27 +216,57 @@ public class Main {
         accountList.add(account);
     }
 
+    // Load bank accounts from file
     static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file) throws FileNotFoundException {
-        ArrayList<BankAccount_S2023_Group6> accountList = new ArrayList<>();
+        ArrayList<BankAccount_S2023_Group6> accounts = new ArrayList<>();
+        BankAccount_S2023_Group6 currentBankAccount = null;
+        SavingsAccount_S2023_Group6 currentSavingsAccount = null;
+        CheckingAccount_S2023_Group6 currentCheckingAccount = null;
 
         Scanner scanner = new Scanner(file);
-        Pattern pattern = Pattern.compile("\\[(.*?)]");
 
+        //loop through the data file
         while (scanner.hasNextLine()){
             String line = scanner.nextLine();
-            Matcher matcher = pattern.matcher(line);
-            if (matcher.find()){
-                String[] parts = matcher.group(1).split(", ");
-                String bankAccountNumber = (parts[0].split("= ")[1]).trim();
-                String firstName = (parts[1].split("= ")[1]).trim();
-                String lastName = (parts[2].split("= ")[1]).trim();
 
-                BankAccount_S2023_Group6 bankAccount = new BankAccount_S2023_Group6(bankAccountNumber, firstName, lastName);
-                accountList.add(bankAccount);
+            // Check if the line contains bank account info
+            if(line.startsWith("BankAccount")){
+                String[] accountInfo = line.split("[=,\\[\\]]+");
+
+                //extract info
+                String accountNum = accountInfo[2];
+                String firstName = accountInfo[4];
+                String lastName = accountInfo[6];
+
+                currentBankAccount = new BankAccount_S2023_Group6(accountNum.trim(), firstName.trim(), lastName.trim());
+                accounts.add(currentBankAccount);
+            }
+
+            if (line.startsWith("Savings")){
+                String[] accountInfo = line.split("[\\[\\]:; $]+");
+
+                String accountNum = accountInfo[5];
+                double accountBalance = Double.parseDouble(accountInfo[8]);
+
+                //create savings account object
+                currentSavingsAccount = new SavingsAccount_S2023_Group6(currentBankAccount.getBankAccountNumber(), currentBankAccount.getFirstName(), currentBankAccount.getLastName(), accountNum.trim(), accountBalance);
+                currentBankAccount.addSavingsAccount(currentSavingsAccount);
+            }
+
+            if (line.startsWith("Checking")) {
+                String[] accountInfo = line.split("[\\[\\]:; $]+");
+
+                String accountNum = accountInfo[5];
+                double accountBalance = Double.parseDouble(accountInfo[8]);
+
+                //create checking account object
+                currentCheckingAccount = new CheckingAccount_S2023_Group6(currentBankAccount.getBankAccountNumber(), currentBankAccount.getFirstName(), currentBankAccount.getLastName(), accountNum.trim(), accountBalance);
+                currentBankAccount.addCheckingAccount(currentCheckingAccount);
             }
         }
+
         scanner.close();
-        return accountList;
+        return accounts;
     }
 
     /*Our bank account application uses a bank account number to organize everything  
@@ -269,19 +299,34 @@ public class Main {
             // Write account to file
             writer.println(account.toString());
 
-            if (account.getSavingsAccounts() != null){
-                ArrayList<SavingsAccount_S2023_Group6> savings = account.getSavingsAccounts();
+            //write savings accounts
+            SaveSavings(writer, account);
 
-                // write savings accounts to file
-                for (SavingsAccount_S2023_Group6 savingsAccount: savings){
-                    writer.println(savingsAccount);
-                }
-            }
+            //write checking accounts
+            SaveChecking(writer, account);
 
         }
         writer.close();
 
         return "Data written to file: " + data.getAbsoluteFile();
+    }
+
+    static void SaveSavings(PrintWriter writer, BankAccount_S2023_Group6 account){
+        if (account.getSavingsAccounts() != null){
+            // write savings accounts to file
+            for (SavingsAccount_S2023_Group6 savingsAccount: account.getSavingsAccounts()){
+                writer.println(savingsAccount);
+            }
+        }
+    }
+
+    static void SaveChecking(PrintWriter writer, BankAccount_S2023_Group6 account){
+        if (account.getCheckingAccounts() != null){
+            //write checking accounts to file
+            for (CheckingAccount_S2023_Group6 checkingAccount: account.getCheckingAccounts()){
+                writer.println(checkingAccount);
+            }
+        }
     }
 
     static BankAccount_S2023_Group6 LogIn(String accountNum, ArrayList<BankAccount_S2023_Group6> accounts){

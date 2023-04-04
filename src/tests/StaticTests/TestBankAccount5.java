@@ -23,7 +23,6 @@ public class TestBankAccount5 {
     	
 		System.out.println("Print Entire Bank Account Info:");
 		System.out.println(CheckingAccount.toString());
-		CheckingAccount.printCheckingAccount_S2023_Group6();
 
 		System.out.println("Deposit amount of: $" + depositAmount);
 		try{
@@ -34,7 +33,7 @@ public class TestBankAccount5 {
 			System.out.println(ex);
 		}
 
-		CheckingAccount.printCheckingAccount_S2023_Group6();
+		System.out.println(CheckingAccount);
 		
 		System.out.println("Deposit amount of: $" + depositAmount);
 		try{
@@ -45,7 +44,7 @@ public class TestBankAccount5 {
 			System.out.println(ex);
 		}
 
-		CheckingAccount.printCheckingAccount_S2023_Group6();
+		System.out.println(CheckingAccount);
 
 		System.out.println("Withdraw amount of: $" + withdrawAmount);
 		try{
@@ -55,10 +54,10 @@ public class TestBankAccount5 {
 		} catch (DoubleValidiationException ex){
 			System.out.println(ex);
 		}
-		CheckingAccount.printCheckingAccount_S2023_Group6();
+		System.out.println(CheckingAccount);
 
 		System.out.println("Fee amount of: $" + feeAmount);
 		CheckingAccount.chargeFees(feeAmount);
-		CheckingAccount.printCheckingAccount_S2023_Group6();
+		System.out.println(CheckingAccount);
 	}
 }
