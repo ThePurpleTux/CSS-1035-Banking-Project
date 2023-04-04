@@ -46,7 +46,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 */
 	public double depositSavings(double depositAmount) throws LargeDepositException, DoubleValidiationException {
 		// Input Validation
-		if (!Extensions.ValidateInput(depositAmount, "^[0-9]+$")){
+		if (!Extensions.ValidateInput(depositAmount, "^[0-9]+(\\.[0-9]{1,2})?$")){
 			throw new DoubleValidiationException(depositAmount);
 		}
 
@@ -65,7 +65,7 @@ public class SavingsAccount_S2023_Group6 extends BankAccount_S2023_Group6 {
 	 */
 	public double withdrawSavings(double withdrawAmount) throws NegativeBalanceException, DoubleValidiationException {
 		// Input Validation
-		if (!Extensions.ValidateInput(withdrawAmount, "^[0-9]+$")){
+		if (!Extensions.ValidateInput(withdrawAmount, "^[0-9]+(\\.[0-9]{1,2})?$")){
 			throw new DoubleValidiationException(withdrawAmount);
 		}
 

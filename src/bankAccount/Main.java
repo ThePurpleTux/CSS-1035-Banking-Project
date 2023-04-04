@@ -1,5 +1,9 @@
 package bankAccount;
 
+import Exceptions.DoubleValidiationException;
+import Exceptions.LargeDepositException;
+import Exceptions.NegativeBalanceException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,22 +68,149 @@ public class Main {
                 }
 
                 if (choice == 2){
-                    System.out.println("Register new savings account\n");
-                    System.out.println("-----------------------------\n");
+                    System.out.println("\nRegister new savings account");
+                    System.out.println("\n-----------------------------");
 
-                    System.out.println("Creating new savings account for account number: " + currentAccount.getBankAccountNumber());
+                    System.out.println("\nCreating new savings account for account number: " + currentAccount.getBankAccountNumber());
                     String savingsAccountNum = RegisterSavingsAccount(currentAccount);
-                    System.out.println("Savings account created with account number: " + savingsAccountNum + " for Bank Account " + currentAccount.getBankAccountNumber());
+                    System.out.println("\nSavings account created with account number: " + savingsAccountNum + " for Bank Account " + currentAccount.getBankAccountNumber());
                 }
 
                 if (choice == 3){
-                    System.out.println("Register new checking account\n");
-                    System.out.println("-----------------------------\n");
-                    System.out.println("Please enter your bank account number: ");
+                    System.out.println("\nRegister new checking account");
+                    System.out.println("-----------------------------");
 
-                    System.out.println("Creating new checking account for account number: " + currentAccount.getBankAccountNumber());
+                    System.out.println("\nCreating new checking account for account number: " + currentAccount.getBankAccountNumber());
                     String checkingAccountNum = RegisterCheckingAccount(currentAccount);
-                    System.out.println("Checking account created with account number: " + checkingAccountNum + " for Bank Account " + currentAccount.getBankAccountNumber());
+                    System.out.println("\nChecking account created with account number: " + checkingAccountNum + " for Bank Account " + currentAccount.getBankAccountNumber());
+                }
+
+                if (choice == 4){
+                    scanner.nextLine(); // Consume leftover input
+
+                    System.out.println("""
+                            \nWould you like to deposit into a savings or checking account? (Enter a number)
+                            1. Savings
+                            2. Checking
+                            
+                            """);
+                    int input = Integer.parseInt(scanner.nextLine());
+
+                    if (!Extensions.ValidateInput(input, "^[12]$")){
+                        System.out.println("Invalid Input, please enter 1 or 2...");
+                        continue;
+                    }
+
+                    if (input == 1){
+                        System.out.println("\nPlease enter the account number of the savings account you would like to deposit into: ");
+                        String accountNum = scanner.nextLine();
+
+                        for (SavingsAccount_S2023_Group6 savingsAccount: currentAccount.getSavingsAccounts()) {
+                            if (savingsAccount.getSavingsAccountNumber().equals(accountNum)){
+                                System.out.println("\nEnter the amount you would like to deposit: ");
+                                double amount = Double.parseDouble(scanner.nextLine()); // for now, we are trusting that the user will enter a valid number. Input will need to be validated at some point.
+
+                                System.out.println("Adding " + amount + " dollars to account " + savingsAccount.getSavingsAccountNumber());
+                                try {
+                                    savingsAccount.depositSavings(amount);
+                                } catch (LargeDepositException e) {
+                                    throw new RuntimeException(e);
+                                } catch (DoubleValidiationException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                System.out.println("Deposit Successful...");
+                            }
+                        }
+                    }
+
+                    if (input == 2){
+                        System.out.println("\nPlease enter the account number of the checking account you would like to deposit into: ");
+                        String accountNum = scanner.nextLine();
+
+                        for (CheckingAccount_S2023_Group6 checkingAccount: currentAccount.getCheckingAccounts()){
+                            if (checkingAccount.getCheckingAccountNumber().equals(accountNum)){
+                                System.out.println("\nEnter the amount you would like to deposit");
+                                double amount = Double.parseDouble(scanner.nextLine()); // for now, we are trusting that the user will enter a valid number. Input will need to be validated at some point.
+
+                                System.out.println("Adding " + amount + " dollars to account " + checkingAccount.getCheckingAccountNumber());
+                                try {
+                                    checkingAccount.depositChecking(amount);
+                                } catch (LargeDepositException e) {
+                                    throw new RuntimeException(e);
+                                } catch (DoubleValidiationException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                System.out.println("Deposit Successful...");
+                            }
+                        }
+                    }
+
+
+                }
+
+                if (choice == 5){
+                    scanner.nextLine(); // Consume leftover input
+
+                    System.out.println("""
+                            \nWould you like to withdraw from a savings or checking account? (Enter a number)
+                            1. Savings
+                            2. Checking
+                            
+                            """);
+                    int input = Integer.parseInt(scanner.nextLine());
+
+                    if (!Extensions.ValidateInput(input, "^[12]$")){
+                        System.out.println("Invalid Input, please enter 1 or 2...");
+                        continue;
+                    }
+
+                    if (input == 1){
+                        System.out.println("\nPlease enter the account number of the savings account you would like to withdraw from: ");
+                        String accountNum = scanner.nextLine();
+
+                        for (SavingsAccount_S2023_Group6 savingsAccount: currentAccount.getSavingsAccounts()) {
+                            if (savingsAccount.getSavingsAccountNumber().equals(accountNum)){
+                                System.out.println("\nEnter the amount you would like to withdraw: ");
+                                double amount = Double.parseDouble(scanner.nextLine()); // for now, we are trusting that the user will enter a valid number. Input will need to be validated at some point.
+
+                                System.out.println("Withdrawing " + amount + " dollars from account " + savingsAccount.getSavingsAccountNumber());
+                                try {
+                                    savingsAccount.withdrawSavings(amount);
+                                } catch (DoubleValidiationException e) {
+                                    throw new RuntimeException(e);
+                                } catch (NegativeBalanceException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                System.out.println("Deposit Successful...");
+                            }
+                        }
+                    }
+
+                    if (input == 2){
+                        System.out.println("\nPlease enter the account number of the checking account you would like to withdraw from: ");
+                        String accountNum = scanner.nextLine();
+
+                        for (CheckingAccount_S2023_Group6 checkingAccount: currentAccount.getCheckingAccounts()) {
+                            if (checkingAccount.getCheckingAccountNumber().equals(accountNum)){
+                                System.out.println("\nEnter the amount you would like to withdraw: ");
+                                double amount = Double.parseDouble(scanner.nextLine()); // for now, we are trusting that the user will enter a valid number. Input will need to be validated at some point.
+
+                                System.out.println("Withdrawing " + amount + " dollars from account " + checkingAccount.getCheckingAccountNumber());
+                                try {
+                                    checkingAccount.withdrawChecking(amount);
+                                } catch (DoubleValidiationException e) {
+                                    throw new RuntimeException(e);
+                                } catch (NegativeBalanceException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                System.out.println("Deposit Successful...");
+                            }
+                        }
+                    }
                 }
 
                 if (choice == 0){
@@ -187,6 +318,8 @@ public class Main {
                 1. List Account Into
                 2. Register Savings Account
                 3. Register Checking Account
+                4. Deposit into a checking or savings account
+                5. Withdraw from a checking or savings account
 
                 0. Log Out
                 """;
