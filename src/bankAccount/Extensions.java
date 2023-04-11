@@ -1,6 +1,7 @@
 package bankAccount;
 
 import javax.crypto.*;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -21,6 +22,9 @@ import java.util.regex.Matcher;
  * - Contains methods for validating each data type used in the application
  */
 public class Extensions {
+    static int myTLen = 128;
+    static byte[] myIv = "1234567890123456789".getBytes();
+    static GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(myTLen, myIv);
 
     /**
      * Validate a Given input - Takes an input and a regex query (both in string form) and attempts to find a match for the query within the input
@@ -50,22 +54,16 @@ public class Extensions {
     }
 
     // Encryption/Decryption Methods
-    public static String Encrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+    public static String Encrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmParameterSpec);
         return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes(StandardCharsets.UTF_8)));
     }
 
-    public static String Decrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+    public static String Decrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
+        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmParameterSpec);
         return new String(cipher.doFinal(Base64.getDecoder().decode(data)));
-    }
-
-    public static SecretKeySpec GenSecretKeySpecFromPassword(String password) {
-        byte[] passwordBytes = password.getBytes();
-
-        return new SecretKeySpec(passwordBytes, "AES");
     }
 
     public static SecretKeySpec setKey(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {

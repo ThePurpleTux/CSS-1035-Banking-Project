@@ -7,15 +7,15 @@ import Exceptions.NegativeBalanceException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
+
 import java.io.*;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 // Main runner for the app
 public class Main {
@@ -45,6 +45,8 @@ public class Main {
             } catch (BadPaddingException e) {
                 throw new RuntimeException(e);
             } catch (InvalidKeyException e) {
+                throw new RuntimeException(e);
+            } catch (InvalidAlgorithmParameterException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -369,7 +371,7 @@ public class Main {
     }
 
     // Load bank accounts from file
-    static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file, String password) throws FileNotFoundException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file, String password) throws FileNotFoundException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         ArrayList<BankAccount_S2023_Group6> accounts = new ArrayList<>();
         BankAccount_S2023_Group6 currentBankAccount = null;
         SavingsAccount_S2023_Group6 currentSavingsAccount = null;
@@ -442,7 +444,7 @@ public class Main {
     /*The data file is stored in cleartext, it's very easy for an attacker to
     * read off this file, the file needs to be encrypted 
     */ 
-    static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts,String password) throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts,String password) throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         File data = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
         File directory = new File(System.getProperty("user.home") + File.separator + "Banking");
 
@@ -465,7 +467,7 @@ public class Main {
         return "Data written to file: " + data.getAbsoluteFile();
     }
 
-    static void SaveSavings(PrintWriter writer, BankAccount_S2023_Group6 account, String password) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+    static void SaveSavings(PrintWriter writer, BankAccount_S2023_Group6 account, String password) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
         if (account.getSavingsAccounts() != null){
             // write savings accounts to file
             for (SavingsAccount_S2023_Group6 savingsAccount: account.getSavingsAccounts()){
@@ -474,7 +476,7 @@ public class Main {
         }
     }
 
-    static void SaveChecking(PrintWriter writer, BankAccount_S2023_Group6 account, String password) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
+    static void SaveChecking(PrintWriter writer, BankAccount_S2023_Group6 account, String password) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
         if (account.getCheckingAccounts() != null){
             //write checking accounts to file
             for (CheckingAccount_S2023_Group6 checkingAccount: account.getCheckingAccounts()){
