@@ -59,7 +59,7 @@ public class Extensions {
     public static String Decrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
-        return cipher.doFinal(Base64.getDecoder().decode(data)).toString();
+        return new String(cipher.doFinal(Base64.getDecoder().decode(data)));
     }
 
     public static SecretKeySpec GenSecretKeySpecFromPassword(String password) {

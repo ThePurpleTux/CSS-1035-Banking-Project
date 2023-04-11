@@ -31,9 +31,21 @@ public class Main {
 
         if (outfile.exists()){
             try {
-                _accountList = LoadFromFile(outfile);
+                _accountList = LoadFromFile(outfile, password);
             } catch (FileNotFoundException e){
                 System.out.printf("File \"%s\" not found...%n", outfile.getAbsoluteFile());
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchPaddingException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalBlockSizeException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (BadPaddingException e) {
+                throw new RuntimeException(e);
+            } catch (InvalidKeyException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -365,15 +377,11 @@ public class Main {
 
         Scanner scanner = new Scanner(file);
 
-
-        while (scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            Extensions.Decrypt(line, Extensions.setKey(password));
-        }
-
         //loop through the data file
         while (scanner.hasNextLine()){
-            String line = scanner.nextLine();
+            String encryptedLine = scanner.nextLine();
+
+            String line = Extensions.Decrypt(encryptedLine, Extensions.setKey(password));
 
             // Check if the line contains bank account info
             if(line.startsWith("BankAccount")){
@@ -435,7 +443,7 @@ public class Main {
     * read off this file, the file needs to be encrypted 
     */ 
     static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts,String password) throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        File data = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.enc");
+        File data = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
         File directory = new File(System.getProperty("user.home") + File.separator + "Banking");
 
         if (!directory.exists()) directory.mkdir();
