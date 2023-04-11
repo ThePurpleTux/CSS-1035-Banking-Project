@@ -4,11 +4,14 @@ import Exceptions.DoubleValidiationException;
 import Exceptions.LargeDepositException;
 import Exceptions.NegativeBalanceException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -21,6 +24,10 @@ public class Main {
         ArrayList<BankAccount_S2023_Group6> _accountList = new ArrayList<>();
         BankAccount_S2023_Group6 currentAccount = null;
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Password: ");
+        String password = scanner.nextLine();
+
 
         if (outfile.exists()){
             try {
@@ -273,7 +280,7 @@ public class Main {
                 System.out.println("\nSaving Data...");
 
                 try{
-                    System.out.println(SaveData(_accountList));
+                    System.out.println(SaveData(_accountList, password));
                 } catch (Exception e){
                     System.out.println(e.getMessage());
                 } finally {
@@ -350,13 +357,19 @@ public class Main {
     }
 
     // Load bank accounts from file
-    static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file) throws FileNotFoundException {
+    static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file, String password) throws FileNotFoundException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         ArrayList<BankAccount_S2023_Group6> accounts = new ArrayList<>();
         BankAccount_S2023_Group6 currentBankAccount = null;
         SavingsAccount_S2023_Group6 currentSavingsAccount = null;
         CheckingAccount_S2023_Group6 currentCheckingAccount = null;
 
         Scanner scanner = new Scanner(file);
+
+
+        while (scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            Extensions.Decrypt(line, Extensions.setKey(password));
+        }
 
         //loop through the data file
         while (scanner.hasNextLine()){
@@ -421,8 +434,8 @@ public class Main {
     /*The data file is stored in cleartext, it's very easy for an attacker to
     * read off this file, the file needs to be encrypted 
     */ 
-    static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts) throws IOException {
-        File data = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
+    static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts,String password) throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        File data = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.enc");
         File directory = new File(System.getProperty("user.home") + File.separator + "Banking");
 
         if (!directory.exists()) directory.mkdir();
@@ -430,13 +443,13 @@ public class Main {
         PrintWriter writer = new PrintWriter(data);
         for (BankAccount_S2023_Group6 account: accounts) {
             // Write account to file
-            writer.println(account.toString());
+            writer.println(Extensions.Encrypt(account.toString(), Extensions.setKey(password)));
 
             //write savings accounts
-            SaveSavings(writer, account);
+            SaveSavings(writer, account, password);
 
             //write checking accounts
-            SaveChecking(writer, account);
+            SaveChecking(writer, account, password);
 
         }
         writer.close();
@@ -444,20 +457,20 @@ public class Main {
         return "Data written to file: " + data.getAbsoluteFile();
     }
 
-    static void SaveSavings(PrintWriter writer, BankAccount_S2023_Group6 account){
+    static void SaveSavings(PrintWriter writer, BankAccount_S2023_Group6 account, String password) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         if (account.getSavingsAccounts() != null){
             // write savings accounts to file
             for (SavingsAccount_S2023_Group6 savingsAccount: account.getSavingsAccounts()){
-                writer.println(savingsAccount);
+                writer.println(Extensions.Encrypt(savingsAccount.toString(), Extensions.setKey(password)));
             }
         }
     }
 
-    static void SaveChecking(PrintWriter writer, BankAccount_S2023_Group6 account){
+    static void SaveChecking(PrintWriter writer, BankAccount_S2023_Group6 account, String password) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException {
         if (account.getCheckingAccounts() != null){
             //write checking accounts to file
             for (CheckingAccount_S2023_Group6 checkingAccount: account.getCheckingAccounts()){
-                writer.println(checkingAccount);
+                writer.println(Extensions.Encrypt(checkingAccount.toString(), Extensions.setKey(password)));
             }
         }
     }

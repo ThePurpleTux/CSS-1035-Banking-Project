@@ -5,12 +5,12 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -47,6 +47,34 @@ public class Extensions {
 
         String saltStr = salt.toString();
         return saltStr;
+    }
+
+    // Encryption/Decryption Methods
+    public static String Encrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    public static String Decrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+        return cipher.doFinal(Base64.getDecoder().decode(data)).toString();
+    }
+
+    public static SecretKeySpec GenSecretKeySpecFromPassword(String password) {
+        byte[] passwordBytes = password.getBytes();
+
+        return new SecretKeySpec(passwordBytes, "AES");
+    }
+
+    public static SecretKeySpec setKey(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        MessageDigest sha = null;
+        byte[] key = password.getBytes("UTF-8");
+        sha = MessageDigest.getInstance("SHA-1");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16);
+        return new SecretKeySpec(key, "AES");
     }
 }
 
