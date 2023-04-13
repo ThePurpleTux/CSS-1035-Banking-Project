@@ -17,9 +17,12 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 /**
- * <b>Validation Class</b><br>
- * - Responsible for validating input throughout the application
+ * <b>Extensions Class</b><br>
+ * - Responsible for validating input and perfoming cryptographic constructions throughout the application 
  * - Contains methods for validating each data type used in the application
+ * - Contains method for generating a random account number
+ * - Contains methods for encrypting and decrypting a given String
+ * - Contains method for generating an AES key for encryption and decryption based on the user password
  */
 public class Extensions {
     static int myTLen = 128;
@@ -38,7 +41,10 @@ public class Extensions {
         Matcher matcher = pattern.matcher(inputString);
         return matcher.find();
     }
-
+    /* 
+     * Generate a Random Account Number
+     * @return saltStr Random Account Number 
+     */
     // https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-z-and-0-9-in-java
     public static String GenAccountNumber(){
         String SALT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -53,7 +59,7 @@ public class Extensions {
         return saltStr;
     }
 
-    // Encryption/Decryption Methods
+    // Encryption/Decryption/KeyGeneration Methods
     public static String Encrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmParameterSpec);

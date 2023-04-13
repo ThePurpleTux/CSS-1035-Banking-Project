@@ -441,8 +441,8 @@ public class Main {
         return accountNums;
     }
 
-    /*The data file is stored in cleartext, it's very easy for an attacker to
-    * read off this file, the file needs to be encrypted 
+    /*The data file is stored in ciphertext, instead of plaintext. Each BankAccount is encrypted before being written to the file. 
+    * 
     */ 
     static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts,String password) throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         File data = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
