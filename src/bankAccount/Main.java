@@ -336,7 +336,7 @@ public class Main {
         return """
                 Menu
                 ------------------------
-                1. List Account Into
+                1. List Account Info
                 2. Register Savings Account
                 3. Register Checking Account
                 4. Deposit into a checking or savings account
