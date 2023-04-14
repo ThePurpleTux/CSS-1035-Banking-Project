@@ -18,11 +18,13 @@ import java.util.regex.Matcher;
 
 /**
  * <b>Extensions Class</b><br>
- * - Responsible for validating input and perfoming cryptographic constructions throughout the application 
+ * - Responsible for validating input and perfoming cryptographic constructions
+ * throughout the application
  * - Contains methods for validating each data type used in the application
  * - Contains method for generating a random account number
  * - Contains methods for encrypting and decrypting a given String
- * - Contains method for generating an AES key for encryption and decryption based on the user password
+ * - Contains method for generating an AES key for encryption and decryption
+ * based on the user password
  */
 public class Extensions {
     static int myTLen = 128;
@@ -30,10 +32,13 @@ public class Extensions {
     static GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(myTLen, myIv);
 
     /**
-     * Validate a Given input - Takes an input and a regex query (both in string form) and attempts to find a match for the query within the input
+     * Validate a Given input - Takes an input and a regex query (both in string
+     * form) and attempts to find a match for the query within the input
+     * 
      * @param input The input you want to validate
      * @param regex The regex to use for validation
-     * @return true/false - Returns true if match was found and false in all other cases
+     * @return true/false - Returns true if match was found and false in all other
+     *         cases
      */
     public static <T> boolean ValidateInput(T input, String regex) {
         String inputString = String.valueOf(input);
@@ -41,16 +46,19 @@ public class Extensions {
         Matcher matcher = pattern.matcher(inputString);
         return matcher.find();
     }
-    /* 
+
+    /*
      * Generate a Random Account Number
-     * @return saltStr Random Account Number 
+     * https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-
+     * z-and-0-9-in-java
+     * 
+     * @return saltStr Random Account Number
      */
-    // https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-z-and-0-9-in-java
-    public static String GenAccountNumber(){
+    public static String GenAccountNumber() {
         String SALT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
-        while (salt.length() < SALT.length()){
+        while (salt.length() < SALT.length()) {
             int index = (int) (rnd.nextFloat() * SALT.length());
             salt.append(SALT.charAt(index));
         }
@@ -60,13 +68,27 @@ public class Extensions {
     }
 
     // Encryption/Decryption/KeyGeneration Methods
-    public static String Encrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    /*
+     * Initialize cipher for Encryption - Better choice is "AES/GCM/PKCS5Padding",
+     * however "AES/GCM/NoPadding" is used as per bug report
+     * (https://bugs.openjdk.java.net/browse/JDK-8229043)
+     */
+    public static String Encrypt(String data, SecretKeySpec secretKey)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException,
+            InvalidKeyException, InvalidAlgorithmParameterException {
         Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmParameterSpec);
         return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes(StandardCharsets.UTF_8)));
     }
 
-    public static String Decrypt(String data, SecretKeySpec secretKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
+    /*
+     * Initialize cipher for Decryption - Better choice is "AES/GCM/PKCS5Padding",
+     * however "AES/GCM/NoPadding" is used as per bug report
+     * (https://bugs.openjdk.java.net/browse/JDK-8229043)
+     */
+    public static String Decrypt(String data, SecretKeySpec secretKey)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException,
+            BadPaddingException, InvalidAlgorithmParameterException {
         Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
         cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmParameterSpec);
         return new String(cipher.doFinal(Base64.getDecoder().decode(data)));
@@ -81,4 +103,3 @@ public class Extensions {
         return new SecretKeySpec(key, "AES");
     }
 }
-
