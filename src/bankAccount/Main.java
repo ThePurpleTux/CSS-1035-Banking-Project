@@ -17,12 +17,23 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Main runner for the app
+/**
+ * <b>Main Class</b> <br/>
+ * - Houses the UI </br>
+ * - Responsible for saving and loading data <br/>
+ * - Responsible for all encryption/decryption of saved data <br/>
+ *
+ * @author David Rosoff, James Dermezis
+ */
 public class Main {
     public static void main(String[] args){
+        // Location of dat file
         File outfile = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
+        // List of accounts
         ArrayList<BankAccount_S2023_Group6> _accountList = new ArrayList<>();
+        // currently selected account
         BankAccount_S2023_Group6 currentAccount = null;
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter Password: ");
@@ -56,11 +67,12 @@ public class Main {
 
         System.out.println("CSS_1035_Banking_App");
 
-        /*There's no input validation on any of the user input, an attacker 
-         *can add their code or the user might type something to stop the application
-        */
+        /*
+         * This while loop is what runs the UI.
+         *
+         * Its important to note that most of the user input taken from the UI is not validated. As such, one would need to add input validation to all input prompts before using this in a commercial environment
+         */
         while (true){
-
             if (currentAccount != null){
                 // Display logged in menu
                 System.out.println(LoggedInMenu());
@@ -319,6 +331,10 @@ public class Main {
         }
     }
 
+    /**
+     * Displays the initial menu seen when first starting the app
+     * @return The menu
+     */
     static String MainMenu(){
 
         return """
@@ -331,6 +347,10 @@ public class Main {
                 """;
     }
 
+    /**
+     * Displays the menu shown after logging into an account
+     * @return the menu
+     */
     static String LoggedInMenu(){
 
         return """
@@ -346,10 +366,21 @@ public class Main {
                 """;
     }
 
+    /**
+     * Registers a new bank account by taking in a first name and last name, and generating a random AccountNumber, and passes those values to the BankAccount_S2023_Group6 constructor
+     * @param firstName First name to use for the account
+     * @param lastName Last name to use for the account
+     * @return Returns a bankaccount object that was created with the values supplied
+     */
     static BankAccount_S2023_Group6 RegisterBankAccount(String firstName, String lastName){
         return new BankAccount_S2023_Group6(Extensions.GenAccountNumber(), firstName, lastName);
     }
 
+    /**
+     * Adds a Checking account to an already existing bank account
+     * @param account The existing bank account to add the new checking account to
+     * @return Returns the account number of the new checking account
+     */
     static String RegisterCheckingAccount(BankAccount_S2023_Group6 account){
         CheckingAccount_S2023_Group6 newAccount = new CheckingAccount_S2023_Group6(account.getBankAccountNumber(), account.getFirstName(), account.getLastName(), Extensions.GenAccountNumber(), 0);
 
@@ -358,6 +389,11 @@ public class Main {
         return newAccount.getCheckingAccountNumber();
     }
 
+    /**
+     * Adds a Savings account to an already existing bank account
+     * @param account The existing bank account to add the new savings account to
+     * @return Returns the account number of the new savings account
+     */
     static String RegisterSavingsAccount(BankAccount_S2023_Group6 account){
         SavingsAccount_S2023_Group6 newAccount = new SavingsAccount_S2023_Group6(account.getBankAccountNumber(), account.getFirstName(), account.getLastName(), Extensions.GenAccountNumber(), 0);
 
@@ -366,11 +402,29 @@ public class Main {
         return newAccount.getSavingsAccountNumber();
     }
 
+    /**
+     * Adds a bank account to the list of accounts
+     * @param accountList The list of accounts to add to
+     * @param account The account to add
+     */
     static void LoadBankAccount(ArrayList<BankAccount_S2023_Group6> accountList, BankAccount_S2023_Group6 account){
         accountList.add(account);
     }
 
-    // Load bank accounts from file
+    /**
+     * Loads all bank accounts from the dat file into memory.
+     * @param file The dat file
+     * @param password The password used for encryption
+     * @return An array list of loaded bank accounts
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidKeyException
+     * @throws InvalidAlgorithmParameterException
+     */
     static ArrayList<BankAccount_S2023_Group6> LoadFromFile(File file, String password) throws FileNotFoundException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         ArrayList<BankAccount_S2023_Group6> accounts = new ArrayList<>();
         BankAccount_S2023_Group6 currentBankAccount = null;
@@ -425,25 +479,21 @@ public class Main {
         return accounts;
     }
 
-    /*Our bank account application uses a bank account number to organize everything  
-     * like user information and the many bank accounts under their name.  
-     * The risk, in this case, is the bank account number isn't protected and  
-     * all the attacker needs is the user's bank account number to access the user's information and accounts.
-    */
-
-    static ArrayList<String> GetBankAccountNums(ArrayList<BankAccount_S2023_Group6> accounts){
-        ArrayList<String> accountNums = new ArrayList<>();
-
-        for (BankAccount_S2023_Group6 account: accounts) {
-            accountNums.add(account.getBankAccountNumber());
-        }
-
-        return accountNums;
-    }
-
-    /*The data file is stored in ciphertext, instead of plaintext. Each BankAccount is encrypted before being written to the file. 
-    * 
-    */ 
+    /**
+     * Saves all bank acocunts stored in memory to the dat file. Each account is encrypted in order to ensure security. The encryption password is specified when starting the application. <br/>
+     * On the initial start, the password entered will be the password used for encryption. That same password must be used at every subsequent startup to decrypt the stored data. <br/>
+     * If the password is lost, there is no way to recover it. The dat file must be deleted and all stored data will be lost.
+     * @param accounts The list of accounts to store
+     * @param password The encryption password
+     * @return A string indicating where the data was saved
+     * @throws IOException
+     * @throws NoSuchPaddingException
+     * @throws IllegalBlockSizeException
+     * @throws NoSuchAlgorithmException
+     * @throws BadPaddingException
+     * @throws InvalidKeyException
+     * @throws InvalidAlgorithmParameterException
+     */
     static String SaveData(ArrayList<BankAccount_S2023_Group6> accounts,String password) throws IOException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         File data = new File(System.getProperty("user.home") + File.separator + "Banking" + File.separator + "data.dat");
         File directory = new File(System.getProperty("user.home") + File.separator + "Banking");
@@ -467,6 +517,19 @@ public class Main {
         return "Data written to file: " + data.getAbsoluteFile();
     }
 
+    /**
+     * A helper method for the SaveData method. Saves savings accounts to the dat file the same way SaveData saves bank accounts
+     * @param writer The PrintWriter from SaveData
+     * @param account The savings account to save
+     * @param password The encryption password
+     * @throws NoSuchPaddingException
+     * @throws IllegalBlockSizeException
+     * @throws NoSuchAlgorithmException
+     * @throws BadPaddingException
+     * @throws InvalidKeyException
+     * @throws UnsupportedEncodingException
+     * @throws InvalidAlgorithmParameterException
+     */
     static void SaveSavings(PrintWriter writer, BankAccount_S2023_Group6 account, String password) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
         if (account.getSavingsAccounts() != null){
             // write savings accounts to file
@@ -476,6 +539,19 @@ public class Main {
         }
     }
 
+    /**
+     * A helper method for the SaveData method. Saves checking accounts to the dat file the same way SaveData saves bank accounts
+     * @param writer The PrintWriter from SaveData
+     * @param account The checking account to save
+     * @param password The encryption password
+     * @throws NoSuchPaddingException
+     * @throws IllegalBlockSizeException
+     * @throws NoSuchAlgorithmException
+     * @throws BadPaddingException
+     * @throws InvalidKeyException
+     * @throws UnsupportedEncodingException
+     * @throws InvalidAlgorithmParameterException
+     */
     static void SaveChecking(PrintWriter writer, BankAccount_S2023_Group6 account, String password) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, UnsupportedEncodingException, InvalidAlgorithmParameterException {
         if (account.getCheckingAccounts() != null){
             //write checking accounts to file
@@ -485,6 +561,15 @@ public class Main {
         }
     }
 
+    /**
+     * Handles the pseudo login functionality of the application. <br/>
+     * <br/>
+     * Note that this is a very insecure login function. There are no credentials involved. You simply enter an account number, and if it matches an existing account you are logged in. <br/>
+     * To make this secure, at the very least, login needs to require a password, however it would be wise to also user some form of username instead of the account number.
+     * @param accountNum The account number of the account you want to log into
+     * @param accounts The list of bank accounts
+     * @return
+     */
     static BankAccount_S2023_Group6 LogIn(String accountNum, ArrayList<BankAccount_S2023_Group6> accounts){
         for (BankAccount_S2023_Group6 account: accounts) {
             if (account.getBankAccountNumber().equals(accountNum))

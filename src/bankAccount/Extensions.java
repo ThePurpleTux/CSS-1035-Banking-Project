@@ -25,6 +25,8 @@ import java.util.regex.Matcher;
  * - Contains methods for encrypting and decrypting a given String
  * - Contains method for generating an AES key for encryption and decryption
  * based on the user password
+ *
+ * @author David Rosoff, James Dermezis
  */
 public class Extensions {
     static int myTLen = 128;
@@ -47,7 +49,7 @@ public class Extensions {
         return matcher.find();
     }
 
-    /*
+    /**
      * Generate a Random Account Number
      * https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-
      * z-and-0-9-in-java
@@ -67,11 +69,24 @@ public class Extensions {
         return saltStr;
     }
 
-    // Encryption/Decryption/KeyGeneration Methods
-    /*
+    /**
+     * Encryption method
+     *
+     * This method assumes that the data provided is a string, however it can easily be modified to use generics if desired
+     *
      * Initialize cipher for Encryption - Better choice is "AES/GCM/PKCS5Padding",
      * however "AES/GCM/NoPadding" is used as per bug report
      * (https://bugs.openjdk.java.net/browse/JDK-8229043)
+     *
+     * @param data The data to encrypt
+     * @param secretKey The key to use for encryption
+     * @return The encrypted data encoded in Base64
+     * @throws NoSuchPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidKeyException
+     * @throws InvalidAlgorithmParameterException
      */
     public static String Encrypt(String data, SecretKeySpec secretKey)
             throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException,
@@ -81,10 +96,23 @@ public class Extensions {
         return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes(StandardCharsets.UTF_8)));
     }
 
-    /*
+    /**
+     * Decryption Method
+     *
+     * This method assumes that the data provided is a string, however it can easily be modified to use generics if desired
+     *
      * Initialize cipher for Decryption - Better choice is "AES/GCM/PKCS5Padding",
      * however "AES/GCM/NoPadding" is used as per bug report
      * (https://bugs.openjdk.java.net/browse/JDK-8229043)
+     * @param data Encrypted data to decrypt
+     * @param secretKey The key to be used for decryption
+     * @return The decrypted data
+     * @throws NoSuchPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException
      */
     public static String Decrypt(String data, SecretKeySpec secretKey)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException,
@@ -94,6 +122,13 @@ public class Extensions {
         return new String(cipher.doFinal(Base64.getDecoder().decode(data)));
     }
 
+    /**
+     * Generates an Encryption key based on the provided password
+     * @param password the password to use
+     * @return The encryption key
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
     public static SecretKeySpec setKey(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MessageDigest sha = null;
         byte[] key = password.getBytes("UTF-8");
