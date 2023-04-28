@@ -1,2 +1,4 @@
 bankAccount
 Exceptions
+tests.JUnit
+tests.StaticTests
