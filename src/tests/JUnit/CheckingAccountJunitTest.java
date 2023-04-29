@@ -1,7 +1,7 @@
 package tests.JUnit;
 
 /**
- * <b> JUnit Testing for Checking Account Class</b> <br>
+ * <b> JUnit Testing for Checking Account Class </b> <br>
  * 
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
  *

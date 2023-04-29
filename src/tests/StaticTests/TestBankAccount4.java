@@ -4,7 +4,7 @@ import Exceptions.LargeDepositException;
 import Exceptions.NegativeBalanceException;
 import bankAccount.CheckingAccount_S2023_Group6;
 
-/*
+/**
  * <b> Static Test 4 </b> <br>
  * 
  * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
