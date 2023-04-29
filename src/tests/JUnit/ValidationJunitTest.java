@@ -4,6 +4,12 @@ import bankAccount.Extensions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * <b> JUnit Testing for Input Validation </b> <br>
+ * 
+ * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
+ *
+ */
 public class ValidationJunitTest {
     @Test
     void SanityCheck(){
