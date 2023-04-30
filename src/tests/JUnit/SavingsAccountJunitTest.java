@@ -1,12 +1,5 @@
 package tests.JUnit;
 
-/**
- * <b> JUnit Testing for Savings Account Class </b> <br>
- * 
- * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
- *
- */
-
 import Exceptions.DoubleValidiationException;
 import bankAccount.SavingsAccount_S2023_Group6;
 import Exceptions.LargeDepositException;
@@ -14,7 +7,14 @@ import Exceptions.NegativeBalanceException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class SavingsAccountJunitTest {
+/**
+ * <b> JUnit Testing for Savings Account Class </b> <br>
+ * 
+ * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
+ *
+ */
+
+public class SavingsAccountJunitTest {
 
 	@Test
 	void SanityCheck(){

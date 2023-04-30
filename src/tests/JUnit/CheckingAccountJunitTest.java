@@ -1,12 +1,5 @@
 package tests.JUnit;
 
-/**
- * <b> JUnit Testing for Checking Account Class </b> <br>
- * 
- * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
- *
- */
-
 import Exceptions.DoubleValidiationException;
 import bankAccount.CheckingAccount_S2023_Group6;
 import org.junit.jupiter.api.Test;
@@ -14,7 +7,13 @@ import Exceptions.LargeDepositException;
 import Exceptions.NegativeBalanceException;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CheckingAccountJunitTest {
+/**
+ * <b> JUnit Testing for Checking Account Class </b> <br>
+ * 
+ * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
+ *
+ */
+public class CheckingAccountJunitTest {
 
 	@Test
 	void SanityCheck(){
