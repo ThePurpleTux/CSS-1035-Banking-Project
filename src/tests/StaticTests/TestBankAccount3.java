@@ -4,6 +4,12 @@ import Exceptions.LargeDepositException;
 import Exceptions.NegativeBalanceException;
 import bankAccount.SavingsAccount_S2023_Group6;
 
+/**
+ * <b> Static Test 3 </b> <br>
+ * 
+ * @author Group 6: James Dermezis, David Rosoff, James Tomasuolo, Oscar Xu
+ * 
+ */
 public class TestBankAccount3 {
 	private static double startingBalance;
   	private static double depositAmount;

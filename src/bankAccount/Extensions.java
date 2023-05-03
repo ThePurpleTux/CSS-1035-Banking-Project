@@ -15,12 +15,12 @@ import java.util.regex.Matcher;
 /**
  * <b>Extensions Class</b><br>
  * - Responsible for validating input and perfoming cryptographic constructions
- * throughout the application
- * - Contains methods for validating each data type used in the application
- * - Contains method for generating a random account number
- * - Contains methods for encrypting and decrypting a given String
+ * throughout the application<br>
+ * - Contains methods for validating each data type used in the application<br>
+ * - Contains method for generating a random account number<br>
+ * - Contains methods for encrypting and decrypting a given String<br>
  * - Contains method for generating an AES key for encryption and decryption
- * based on the user password
+ * based on the user password<br>
  *
  * @author David Rosoff, James Dermezis
  */
@@ -66,13 +66,13 @@ public class Extensions {
     }
 
     /**
-     * Encryption method
+     * <b>Encryption method </b> <br>
      *
-     * This method assumes that the data provided is a string, however it can easily be modified to use generics if desired
+     * This method assumes that the data provided is a string, however it can easily be modified to use generics if desired<br>
      *
      * Initialize cipher for Encryption - Better choice is "AES/GCM/PKCS5Padding",
-     * however "AES/GCM/NoPadding" is used as per bug report
-     * (https://bugs.openjdk.java.net/browse/JDK-8229043)
+     * however "AES/GCM/NoPadding" is used as per bug report<br>
+     * (https://bugs.openjdk.java.net/browse/JDK-8229043)<br>
      *
      * @param data The data to encrypt
      * @param secretKey The key to use for encryption
@@ -93,13 +93,13 @@ public class Extensions {
     }
 
     /**
-     * Decryption Method
+     * <b> Decryption Method </b> <br>
      *
-     * This method assumes that the data provided is a string, however it can easily be modified to use generics if desired
+     * This method assumes that the data provided is a string, however it can easily be modified to use generics if desired <br>
      *
      * Initialize cipher for Decryption - Better choice is "AES/GCM/PKCS5Padding",
-     * however "AES/GCM/NoPadding" is used as per bug report
-     * (https://bugs.openjdk.java.net/browse/JDK-8229043)
+     * however "AES/GCM/NoPadding" is used as per bug report <br>
+     * (https://bugs.openjdk.java.net/browse/JDK-8229043) <br>
      * @param data Encrypted data to decrypt
      * @param secretKey The key to be used for decryption
      * @return The decrypted data
@@ -119,7 +119,9 @@ public class Extensions {
     }
 
     /**
-     * Generates an Encryption key based on the provided password
+     * <b> Key Generation Method </b> <br>
+     * 
+     * Generates an Encryption key based on the provided password <br>
      * @param password the password to use
      * @return The encryption key
      * @throws UnsupportedEncodingException
