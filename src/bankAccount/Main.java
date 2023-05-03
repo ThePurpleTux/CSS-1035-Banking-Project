@@ -437,7 +437,7 @@ public class Main {
         while (scanner.hasNextLine()){
             String encryptedLine = scanner.nextLine();
 
-            String line = Extensions.Decrypt(encryptedLine, Extensions.setKey(password));
+            String line = Extensions.Decrypt(encryptedLine, Extensions.genKey(password));
 
             // Check if the line contains bank account info
             if(line.startsWith("BankAccount")){
@@ -503,7 +503,7 @@ public class Main {
         PrintWriter writer = new PrintWriter(data);
         for (BankAccount_S2023_Group6 account: accounts) {
             // Write account to file
-            writer.println(Extensions.Encrypt(account.toString(), Extensions.setKey(password)));
+            writer.println(Extensions.Encrypt(account.toString(), Extensions.genKey(password)));
 
             //write savings accounts
             SaveSavings(writer, account, password);
@@ -534,7 +534,7 @@ public class Main {
         if (account.getSavingsAccounts() != null){
             // write savings accounts to file
             for (SavingsAccount_S2023_Group6 savingsAccount: account.getSavingsAccounts()){
-                writer.println(Extensions.Encrypt(savingsAccount.toString(), Extensions.setKey(password)));
+                writer.println(Extensions.Encrypt(savingsAccount.toString(), Extensions.genKey(password)));
             }
         }
     }
@@ -556,7 +556,7 @@ public class Main {
         if (account.getCheckingAccounts() != null){
             //write checking accounts to file
             for (CheckingAccount_S2023_Group6 checkingAccount: account.getCheckingAccounts()){
-                writer.println(Extensions.Encrypt(checkingAccount.toString(), Extensions.setKey(password)));
+                writer.println(Extensions.Encrypt(checkingAccount.toString(), Extensions.genKey(password)));
             }
         }
     }

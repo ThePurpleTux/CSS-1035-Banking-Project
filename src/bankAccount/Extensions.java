@@ -2,14 +2,10 @@ package bankAccount;
 
 import javax.crypto.*;
 import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
@@ -129,7 +125,7 @@ public class Extensions {
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
      */
-    public static SecretKeySpec setKey(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public static SecretKeySpec genKey(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MessageDigest sha = null;
         byte[] key = password.getBytes("UTF-8");
         sha = MessageDigest.getInstance("SHA-1");
